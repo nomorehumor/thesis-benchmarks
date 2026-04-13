@@ -1,0 +1,3 @@
+SELECT start, end, auctionId, num, max_tmp FROM (SELECT auctionId, COUNT(auctionId) AS num, start, end FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) INNER JOIN (SELECT MAX(num_ids) AS max_tmp, start, end FROM (SELECT auctionId, COUNT(auctionId) AS num_ids, start FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) WINDOW TUMBLING(start, SIZE 2 SEC)) ON num == max_tmp WINDOW TUMBLING(start, SIZE 2 SEC) INTO START_END_AUCTION_SINK
+
+SELECT auctionId, price FROM bid WHERE auctionId % INT32(123) = INT32(0) INTO ID_PRICE_AUCTION_SINK

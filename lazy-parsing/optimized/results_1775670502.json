@@ -1,0 +1,542 @@
+[
+  {
+    "query": "SELECT name FROM person WHERE city == VARSIZED(\"redmond\") INTO NAME_SINK",
+    "query_id": "2008583601",
+    "threads_number": 2,
+    "status": "Stopped",
+    "started": "2026-04-08 17:48:23.625000",
+    "stopped": "2026-04-08 17:48:46.907000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_SINK ",
+    "query_id": "2029518196",
+    "threads_number": 2,
+    "status": "Stopped",
+    "started": "2026-04-08 17:48:48.681000",
+    "stopped": "2026-04-08 17:49:08.436000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_ID_SINK",
+    "query_id": "332598625",
+    "threads_number": 2,
+    "status": "Stopped",
+    "started": "2026-04-08 17:49:10.907000",
+    "stopped": "2026-04-08 17:49:33.900000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid WHERE bidder == INT32(1001) INTO BID_AUCTION_ID_SINK",
+    "query_id": "1199661599",
+    "threads_number": 2,
+    "status": "Stopped",
+    "started": "2026-04-08 17:49:35.870000",
+    "stopped": "2026-04-08 17:52:59.370000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person INTO NAME_SINK",
+    "query_id": "666550297",
+    "threads_number": 2,
+    "status": "Stopped",
+    "started": "2026-04-08 17:53:03.224000",
+    "stopped": "2026-04-08 17:53:23.102000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person INTO PERSON_SINK",
+    "query_id": "2125992791",
+    "threads_number": 2,
+    "status": "Stopped",
+    "started": "2026-04-08 17:53:25.570000",
+    "stopped": "2026-04-08 17:53:49.303000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person INTO PERSON_ID_SINK",
+    "query_id": "622711477",
+    "threads_number": 2,
+    "status": "Stopped",
+    "started": "2026-04-08 17:53:50.685000",
+    "stopped": "2026-04-08 17:54:09.616000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid INTO BID_AUCTION_ID_SINK",
+    "query_id": "654044657",
+    "threads_number": 2,
+    "status": "Stopped",
+    "started": "2026-04-08 17:54:12.704000",
+    "stopped": "2026-04-08 17:57:14.984000",
+    "error": ""
+  },
+  {
+    "query": "SELECT start, end, auctionId, num, max_tmp FROM (SELECT auctionId, COUNT(auctionId) AS num, start, end FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) INNER JOIN (SELECT MAX(num_ids) AS max_tmp, start, end FROM (SELECT auctionId, COUNT(auctionId) AS num_ids, start FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) WINDOW TUMBLING(start, SIZE 2 SEC)) ON num == max_tmp WINDOW TUMBLING(start, SIZE 2 SEC) INTO START_END_AUCTION_SINK",
+    "query_id": "1179812345",
+    "threads_number": 2,
+    "status": "TimedOut",
+    "started": "",
+    "stopped": "2026-04-08 20:07:19.876904",
+    "error": "Query polling timed out after 600 seconds"
+  },
+  {
+    "query": "SELECT auctionId, price FROM bid WHERE auctionId % INT32(123) = INT32(0) INTO ID_PRICE_AUCTION_SINK",
+    "query_id": "1431092365",
+    "threads_number": 2,
+    "status": "TimedOut",
+    "started": "",
+    "stopped": "2026-04-08 20:17:20.348021",
+    "error": "Query polling timed out after 600 seconds"
+  },
+  {
+    "query": "SELECT name FROM person WHERE city == VARSIZED(\"redmond\") INTO NAME_SINK",
+    "query_id": "1835942012",
+    "threads_number": 4,
+    "status": "Stopped",
+    "started": "2026-04-08 18:17:21.910000",
+    "stopped": "2026-04-08 18:17:33.737000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_SINK ",
+    "query_id": "1738125214",
+    "threads_number": 4,
+    "status": "Stopped",
+    "started": "2026-04-08 18:17:35.546000",
+    "stopped": "2026-04-08 18:17:45.639000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_ID_SINK",
+    "query_id": "459713390",
+    "threads_number": 4,
+    "status": "Stopped",
+    "started": "2026-04-08 18:17:49.101000",
+    "stopped": "2026-04-08 18:18:00.756000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid WHERE bidder == INT32(1001) INTO BID_AUCTION_ID_SINK",
+    "query_id": "1775647465",
+    "threads_number": 4,
+    "status": "Stopped",
+    "started": "2026-04-08 18:18:02.676000",
+    "stopped": "2026-04-08 18:19:47.384000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person INTO NAME_SINK",
+    "query_id": "258113920",
+    "threads_number": 4,
+    "status": "Stopped",
+    "started": "2026-04-08 18:19:51.429000",
+    "stopped": "2026-04-08 18:20:01.813000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person INTO PERSON_SINK",
+    "query_id": "2093589955",
+    "threads_number": 4,
+    "status": "Stopped",
+    "started": "2026-04-08 18:20:05.056000",
+    "stopped": "2026-04-08 18:20:17.109000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person INTO PERSON_ID_SINK",
+    "query_id": "677934017",
+    "threads_number": 4,
+    "status": "Stopped",
+    "started": "2026-04-08 18:20:18.713000",
+    "stopped": "2026-04-08 18:20:28.466000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid INTO BID_AUCTION_ID_SINK",
+    "query_id": "1242066217",
+    "threads_number": 4,
+    "status": "Stopped",
+    "started": "2026-04-08 18:20:32.207000",
+    "stopped": "2026-04-08 18:22:06.737000",
+    "error": ""
+  },
+  {
+    "query": "SELECT start, end, auctionId, num, max_tmp FROM (SELECT auctionId, COUNT(auctionId) AS num, start, end FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) INNER JOIN (SELECT MAX(num_ids) AS max_tmp, start, end FROM (SELECT auctionId, COUNT(auctionId) AS num_ids, start FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) WINDOW TUMBLING(start, SIZE 2 SEC)) ON num == max_tmp WINDOW TUMBLING(start, SIZE 2 SEC) INTO START_END_AUCTION_SINK",
+    "query_id": "1000712873",
+    "threads_number": 4,
+    "status": "TimedOut",
+    "started": "",
+    "stopped": "2026-04-08 20:32:09.730210",
+    "error": "Query polling timed out after 600 seconds"
+  },
+  {
+    "query": "SELECT auctionId, price FROM bid WHERE auctionId % INT32(123) = INT32(0) INTO ID_PRICE_AUCTION_SINK",
+    "query_id": "41810409",
+    "threads_number": 4,
+    "status": "Stopped",
+    "started": "2026-04-08 18:32:10.421000",
+    "stopped": "2026-04-08 18:39:20.817000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person WHERE city == VARSIZED(\"redmond\") INTO NAME_SINK",
+    "query_id": "154988546",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:39:23.566000",
+    "stopped": "2026-04-08 18:39:29.817000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_SINK ",
+    "query_id": "1054982247",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:39:31.316000",
+    "stopped": "2026-04-08 18:39:36.571000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_ID_SINK",
+    "query_id": "854107832",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:39:39.069000",
+    "stopped": "2026-04-08 18:39:45.213000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid WHERE bidder == INT32(1001) INTO BID_AUCTION_ID_SINK",
+    "query_id": "2030040583",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:39:46.686000",
+    "stopped": "2026-04-08 18:40:41.514000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person INTO NAME_SINK",
+    "query_id": "1088529361",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:40:43.138000",
+    "stopped": "2026-04-08 18:40:48.546000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person INTO PERSON_SINK",
+    "query_id": "744467251",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:40:50.953000",
+    "stopped": "2026-04-08 18:40:57.208000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person INTO PERSON_ID_SINK",
+    "query_id": "800041025",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:40:58.658000",
+    "stopped": "2026-04-08 18:41:03.720000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid INTO BID_AUCTION_ID_SINK",
+    "query_id": "567456001",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:41:06.383000",
+    "stopped": "2026-04-08 18:41:55.235000",
+    "error": ""
+  },
+  {
+    "query": "SELECT start, end, auctionId, num, max_tmp FROM (SELECT auctionId, COUNT(auctionId) AS num, start, end FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) INNER JOIN (SELECT MAX(num_ids) AS max_tmp, start, end FROM (SELECT auctionId, COUNT(auctionId) AS num_ids, start FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) WINDOW TUMBLING(start, SIZE 2 SEC)) ON num == max_tmp WINDOW TUMBLING(start, SIZE 2 SEC) INTO START_END_AUCTION_SINK",
+    "query_id": "1387777605",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:41:57.413000",
+    "stopped": "2026-04-08 18:51:02.043000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId, price FROM bid WHERE auctionId % INT32(123) = INT32(0) INTO ID_PRICE_AUCTION_SINK",
+    "query_id": "1749034989",
+    "threads_number": 8,
+    "status": "Stopped",
+    "started": "2026-04-08 18:51:03.764000",
+    "stopped": "2026-04-08 18:51:58.771000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person WHERE city == VARSIZED(\"redmond\") INTO NAME_SINK",
+    "query_id": "958513242",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:52:01.263000",
+    "stopped": "2026-04-08 18:52:04.677000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_SINK ",
+    "query_id": "1963362060",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:52:06.034000",
+    "stopped": "2026-04-08 18:52:08.866000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_ID_SINK",
+    "query_id": "56324923",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:52:10.857000",
+    "stopped": "2026-04-08 18:52:14.084000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid WHERE bidder == INT32(1001) INTO BID_AUCTION_ID_SINK",
+    "query_id": "521001472",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:52:15.666000",
+    "stopped": "2026-04-08 18:52:43.699000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person INTO NAME_SINK",
+    "query_id": "724695984",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:52:46.060000",
+    "stopped": "2026-04-08 18:52:48.952000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person INTO PERSON_SINK",
+    "query_id": "766488078",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:52:50.940000",
+    "stopped": "2026-04-08 18:52:54.211000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person INTO PERSON_ID_SINK",
+    "query_id": "768662622",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:52:55.661000",
+    "stopped": "2026-04-08 18:52:58.358000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid INTO BID_AUCTION_ID_SINK",
+    "query_id": "305046737",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:53:00.463000",
+    "stopped": "2026-04-08 18:53:25.325000",
+    "error": ""
+  },
+  {
+    "query": "SELECT start, end, auctionId, num, max_tmp FROM (SELECT auctionId, COUNT(auctionId) AS num, start, end FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) INNER JOIN (SELECT MAX(num_ids) AS max_tmp, start, end FROM (SELECT auctionId, COUNT(auctionId) AS num_ids, start FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) WINDOW TUMBLING(start, SIZE 2 SEC)) ON num == max_tmp WINDOW TUMBLING(start, SIZE 2 SEC) INTO START_END_AUCTION_SINK",
+    "query_id": "1450540250",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:53:28.458000",
+    "stopped": "2026-04-08 18:59:21.087000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId, price FROM bid WHERE auctionId % INT32(123) = INT32(0) INTO ID_PRICE_AUCTION_SINK",
+    "query_id": "1338052057",
+    "threads_number": 16,
+    "status": "Stopped",
+    "started": "2026-04-08 18:59:24.495000",
+    "stopped": "2026-04-08 18:59:52.427000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person WHERE city == VARSIZED(\"redmond\") INTO NAME_SINK",
+    "query_id": "94198504",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 18:59:55.903000",
+    "stopped": "2026-04-08 18:59:58.335000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_SINK ",
+    "query_id": "58758282",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 19:00:00.729000",
+    "stopped": "2026-04-08 19:00:03.275000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_ID_SINK",
+    "query_id": "598929206",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 19:00:05.528000",
+    "stopped": "2026-04-08 19:00:07.930000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid WHERE bidder == INT32(1001) INTO BID_AUCTION_ID_SINK",
+    "query_id": "687527585",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 19:00:10.369000",
+    "stopped": "2026-04-08 19:00:29.366000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person INTO NAME_SINK",
+    "query_id": "971730942",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 19:00:31.752000",
+    "stopped": "2026-04-08 19:00:34.279000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person INTO PERSON_SINK",
+    "query_id": "108589076",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 19:00:36.540000",
+    "stopped": "2026-04-08 19:00:38.926000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person INTO PERSON_ID_SINK",
+    "query_id": "577071713",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 19:00:41.360000",
+    "stopped": "2026-04-08 19:00:43.722000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid INTO BID_AUCTION_ID_SINK",
+    "query_id": "147565663",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 19:00:46.169000",
+    "stopped": "2026-04-08 19:01:04.812000",
+    "error": ""
+  },
+  {
+    "query": "SELECT start, end, auctionId, num, max_tmp FROM (SELECT auctionId, COUNT(auctionId) AS num, start, end FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) INNER JOIN (SELECT MAX(num_ids) AS max_tmp, start, end FROM (SELECT auctionId, COUNT(auctionId) AS num_ids, start FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) WINDOW TUMBLING(start, SIZE 2 SEC)) ON num == max_tmp WINDOW TUMBLING(start, SIZE 2 SEC) INTO START_END_AUCTION_SINK",
+    "query_id": "1895693664",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 19:01:07.926000",
+    "stopped": "2026-04-08 19:05:39.763000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId, price FROM bid WHERE auctionId % INT32(123) = INT32(0) INTO ID_PRICE_AUCTION_SINK",
+    "query_id": "615143466",
+    "threads_number": 32,
+    "status": "Stopped",
+    "started": "2026-04-08 19:05:42.573000",
+    "stopped": "2026-04-08 19:06:01.366000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person WHERE city == VARSIZED(\"redmond\") INTO NAME_SINK",
+    "query_id": "419850784",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:06:04.865000",
+    "stopped": "2026-04-08 19:06:07.508000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_SINK ",
+    "query_id": "759623762",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:06:09.704000",
+    "stopped": "2026-04-08 19:06:12.647000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person WHERE city == VARSIZED(\"redmond\") INTO PERSON_ID_SINK",
+    "query_id": "242644559",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:06:14.478000",
+    "stopped": "2026-04-08 19:06:17.175000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid WHERE bidder == INT32(1001) INTO BID_AUCTION_ID_SINK",
+    "query_id": "254104702",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:06:19.221000",
+    "stopped": "2026-04-08 19:06:40.140000",
+    "error": ""
+  },
+  {
+    "query": "SELECT name FROM person INTO NAME_SINK",
+    "query_id": "132569423",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:06:43.376000",
+    "stopped": "2026-04-08 19:06:46.332000",
+    "error": ""
+  },
+  {
+    "query": "SELECT * FROM person INTO PERSON_SINK",
+    "query_id": "353763891",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:06:48.273000",
+    "stopped": "2026-04-08 19:06:50.895000",
+    "error": ""
+  },
+  {
+    "query": "SELECT id FROM person INTO PERSON_ID_SINK",
+    "query_id": "268386352",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:06:53.065000",
+    "stopped": "2026-04-08 19:06:55.892000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId FROM bid INTO BID_AUCTION_ID_SINK",
+    "query_id": "1475530100",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:06:57.883000",
+    "stopped": "2026-04-08 19:07:18.439000",
+    "error": ""
+  },
+  {
+    "query": "SELECT start, end, auctionId, num, max_tmp FROM (SELECT auctionId, COUNT(auctionId) AS num, start, end FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) INNER JOIN (SELECT MAX(num_ids) AS max_tmp, start, end FROM (SELECT auctionId, COUNT(auctionId) AS num_ids, start FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) WINDOW TUMBLING(start, SIZE 2 SEC)) ON num == max_tmp WINDOW TUMBLING(start, SIZE 2 SEC) INTO START_END_AUCTION_SINK",
+    "query_id": "1265903387",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:07:22.426000",
+    "stopped": "2026-04-08 19:11:01.585000",
+    "error": ""
+  },
+  {
+    "query": "SELECT auctionId, price FROM bid WHERE auctionId % INT32(123) = INT32(0) INTO ID_PRICE_AUCTION_SINK",
+    "query_id": "1980333466",
+    "threads_number": 64,
+    "status": "Stopped",
+    "started": "2026-04-08 19:11:04.716000",
+    "stopped": "2026-04-08 19:11:25.108000",
+    "error": ""
+  }
+]
