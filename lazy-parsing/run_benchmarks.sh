@@ -16,37 +16,33 @@ DOCKER_NETWORK="mynet"
 WORKER_NAME="worker-max"
 WORKER_HOST="$WORKER_NAME:8080"
 DATA_VOLUME="/data/users/maxim/large:/work/large:ro"
+OPERATOR_BUFFER_SIZE=262144
 
 # Suite definitions
 declare -A SUITE_WORKER_IMAGE
 declare -A SUITE_CLI_IMAGE
 declare -A SUITE_STATUS_CLI_IMAGE
 declare -A SUITE_TOPOLOGY
-declare -A SUITE_BUFFER_SIZES
 
 SUITE_WORKER_IMAGE[baseline]="nebulastream/worker:maxim-popov-master-baseline"
 SUITE_CLI_IMAGE[baseline]="nebulastream/nes-cli:maxim-popov-master-baseline"
 SUITE_STATUS_CLI_IMAGE[baseline]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
 SUITE_TOPOLOGY[baseline]="$SCRIPT_DIR/topology-csv.yaml"
-SUITE_BUFFER_SIZES[baseline]="131072 262144 524288 1048576"
 
 SUITE_WORKER_IMAGE[optimized]="nebulastream/worker:maxim-popov-lazy-parsing"
 SUITE_CLI_IMAGE[optimized]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
 SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
 SUITE_TOPOLOGY[optimized]="$SCRIPT_DIR/topology-csv.yaml"
-SUITE_BUFFER_SIZES[optimized]="4096 8192 16384 32768 65536 80000 100000"
 
 SUITE_WORKER_IMAGE[baseline-json]="nebulastream/worker:maxim-popov-master-baseline"
 SUITE_CLI_IMAGE[baseline-json]="nebulastream/nes-cli:maxim-popov-master-baseline"
 SUITE_STATUS_CLI_IMAGE[baseline-json]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
 SUITE_TOPOLOGY[baseline-json]="$SCRIPT_DIR/topology-json.yaml"
-SUITE_BUFFER_SIZES[baseline-json]="131072 262144 524288 1048576"
 
 SUITE_WORKER_IMAGE[optimized-json]="nebulastream/worker:maxim-popov-lazy-parsing"
 SUITE_CLI_IMAGE[optimized-json]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
 SUITE_STATUS_CLI_IMAGE[optimized-json]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
 SUITE_TOPOLOGY[optimized-json]="$SCRIPT_DIR/topology-json.yaml"
-SUITE_BUFFER_SIZES[optimized-json]="4096 8192 16384 32768 65536 80000 100000"
 
 ALL_SUITES=(baseline optimized baseline-json optimized-json)
 
@@ -85,7 +81,7 @@ EOF
 # --- Docker wrappers ---------------------------------------------------------
 
 start_worker() {
-    local suite="$1" threads="$2" buffer_size="$3"
+    local suite="$1" threads="$2"
     local image="${SUITE_WORKER_IMAGE[$suite]}"
 
     sudo docker run --rm --network "$DOCKER_NETWORK" --cpus 64 \
@@ -93,7 +89,7 @@ start_worker() {
         -v "$DATA_VOLUME" \
         -d "$image" \
         "--worker.query_engine.number_of_worker_threads=$threads" \
-        "--worker.default_query_execution.operator_buffer_size=$buffer_size"
+        "--worker.default_query_execution.operator_buffer_size=$OPERATOR_BUFFER_SIZE"
 }
 
 kill_worker() {
@@ -134,14 +130,13 @@ init_results_file() {
 
 add_result() {
     local file="$1" query_text="$2" query_id="$3" threads="$4"
-    local buffer_size="$5" status="$6" started="$7" stopped="$8" error="${9:-}"
+    local status="$5" started="$6" stopped="$7" error="${8:-}"
 
     local temp
     temp=$(mktemp)
     jq --arg query "$query_text" \
        --arg qid "$query_id" \
        --arg threads "$threads" \
-       --arg buffer_size "$buffer_size" \
        --arg status "$status" \
        --arg started "$started" \
        --arg stopped "$stopped" \
@@ -150,7 +145,6 @@ add_result() {
            query: $query,
            query_id: $qid,
            threads_number: ($threads | tonumber),
-           buffer_size: ($buffer_size | tonumber),
            status: $status,
            started: $started,
            stopped: $stopped,

@@ -14,7 +14,7 @@ DOCKER_NETWORK="mynet"
 WORKER_NAME="worker-max"
 WORKER_HOST="$WORKER_NAME:8080"
 DATA_VOLUME="/data/users/maxim/large:/work/large:ro"
-OPERATOR_BUFFER_SIZE=131072
+OPERATOR_BUFFER_SIZE=262144
 
 # Suite definitions (nebuli API)
 declare -A SUITE_WORKER_IMAGE
