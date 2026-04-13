@@ -8,7 +8,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # =============================================================================
 
 THREADS=(2 4 8 16 32 48 64)
-QUERIES_DIR="$SCRIPT_DIR/queries"
 NUM_ITERATIONS=1
 DOCKER_NETWORK="mynet"
 WORKER_NAME="worker-max"
@@ -20,16 +19,29 @@ OPERATOR_BUFFER_SIZE=262144
 declare -A SUITE_WORKER_IMAGE
 declare -A SUITE_CLI_IMAGE
 declare -A SUITE_STATUS_CLI_IMAGE
+declare -A SUITE_QUERIES_DIR
 
 SUITE_WORKER_IMAGE[baseline]="nebulastream/worker:maxim-popov-baseline-varsized-memcpy"
 SUITE_CLI_IMAGE[baseline]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
 SUITE_STATUS_CLI_IMAGE[baseline]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
+SUITE_QUERIES_DIR[baseline]="$SCRIPT_DIR/queries"
 
 SUITE_WORKER_IMAGE[optimized]="nebulastream/worker:maxim-popov-remove-memcpy-bench"
 SUITE_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
 SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
+SUITE_QUERIES_DIR[optimized]="$SCRIPT_DIR/queries"
 
-ALL_SUITES=(baseline optimized)
+SUITE_WORKER_IMAGE[baseline-json]="nebulastream/worker:maxim-popov-baseline-varsized-memcpy"
+SUITE_CLI_IMAGE[baseline-json]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
+SUITE_STATUS_CLI_IMAGE[baseline-json]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
+SUITE_QUERIES_DIR[baseline-json]="$SCRIPT_DIR/queries-json"
+
+SUITE_WORKER_IMAGE[optimized-json]="nebulastream/worker:maxim-popov-remove-memcpy-bench"
+SUITE_CLI_IMAGE[optimized-json]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
+SUITE_STATUS_CLI_IMAGE[optimized-json]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
+SUITE_QUERIES_DIR[optimized-json]="$SCRIPT_DIR/queries-json"
+
+ALL_SUITES=(baseline optimized baseline-json optimized-json)
 
 # =============================================================================
 # Helpers
@@ -57,7 +69,6 @@ If no suite is specified, all suites are run.
 Options:
   -t, --threads LIST       Comma-separated thread counts (default: 2,4,8,16,32,48,64)
   -n, --iterations NUM     Number of iterations per query (default: 1)
-  -d, --queries-dir DIR    Directory containing query YAML files (default: queries/)
   -o, --output DIR         Output directory for results (default: SCRIPT_DIR/results)
   -h, --help               Show this help message
 EOF
@@ -157,10 +168,11 @@ run_suite() {
 
     init_results_file "$results_file"
 
-    # Discover query files
-    local query_files=("$QUERIES_DIR"/*.yaml)
+    # Discover query files for this suite
+    local queries_dir="${SUITE_QUERIES_DIR[$suite]}"
+    local query_files=("$queries_dir"/*.yaml)
     if [[ ! -e "${query_files[0]}" ]]; then
-        die "No query YAML files found in $QUERIES_DIR/"
+        die "No query YAML files found in $queries_dir/"
     fi
     log "Found ${#query_files[@]} query file(s):"
     for f in "${query_files[@]}"; do
@@ -239,10 +251,6 @@ while (( $# > 0 )); do
             NUM_ITERATIONS="$2"
             shift 2
             ;;
-        -d|--queries-dir)
-            QUERIES_DIR="$2"
-            shift 2
-            ;;
         -o|--output)
             OUTPUT_DIR="$2"
             shift 2
@@ -271,13 +279,11 @@ fi
 # Main
 # =============================================================================
 
-[[ -d "$QUERIES_DIR" ]] || die "Queries directory not found: $QUERIES_DIR"
 mkdir -p "$OUTPUT_DIR"
 
 log "Suites to run:  ${SUITES_TO_RUN[*]}"
 log "Thread counts:  ${THREADS[*]}"
 log "Iterations:     $NUM_ITERATIONS"
-log "Queries dir:    $QUERIES_DIR"
 log "Output dir:     $OUTPUT_DIR"
 
 for suite in "${SUITES_TO_RUN[@]}"; do
