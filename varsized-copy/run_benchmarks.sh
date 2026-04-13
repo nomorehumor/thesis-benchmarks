@@ -14,6 +14,7 @@ DOCKER_NETWORK="mynet"
 WORKER_NAME="worker-max"
 WORKER_HOST="$WORKER_NAME:8080"
 DATA_VOLUME="/data/users/maxim/large:/work/large:ro"
+OPERATOR_BUFFER_SIZE=131072
 
 # Suite definitions (nebuli API)
 declare -A SUITE_WORKER_IMAGE
@@ -69,13 +70,14 @@ start_worker() {
     local suite="$1" threads="$2"
     local image="${SUITE_WORKER_IMAGE[$suite]}"
 
-    sudo docker run --rm --network "$DOCKER_NETWORK" \
+    sudo docker run --rm --network "$DOCKER_NETWORK" --cpus 64 \
         --name "$WORKER_NAME" \
         -v "$DATA_VOLUME" \
         -p 8080:8080 \
         -d "$image" \
         "--grpc=$WORKER_HOST" \
-        "--worker.query_engine.number_of_worker_threads=$threads"
+        "--worker.query_engine.number_of_worker_threads=$threads" \
+        "--worker.default_query_execution.operator_buffer_size=$OPERATOR_BUFFER_SIZE"
 }
 
 kill_worker() {

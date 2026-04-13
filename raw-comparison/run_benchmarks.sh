@@ -16,6 +16,7 @@ WORKER_NAME="worker-max"
 WORKER_HOST="$WORKER_NAME:8080"
 DATA_VOLUME="/data/users/maxim/large:/work/large:ro"
 OPERATOR_BUFFER_SIZE=131072
+NUM_ITERATIONS=1
 
 # Suite definitions: VARIANT x FORMAT
 # Each suite is defined by: worker_image, cli_image, status_cli_image, extra_worker_volumes, topology_file
@@ -75,6 +76,7 @@ If no suite is specified, all suites are run.
 
 Options:
   -t, --threads LIST   Comma-separated thread counts (default: 2,4,8,16,32,64)
+  -n, --iterations NUM Number of iterations per query (default: 1)
   -q, --queries FILE   Path to queries file (default: queries.txt)
   -o, --output  DIR    Output directory for results (default: SCRIPT_DIR/results)
   -h, --help           Show this help message
@@ -89,7 +91,7 @@ start_worker() {
     local image="${SUITE_WORKER_IMAGE[$suite]}"
     local extra="${SUITE_EXTRA_VOLUMES[$suite]}"
 
-    local cmd=(sudo docker run --rm --network "$DOCKER_NETWORK"
+    local cmd=(sudo docker run --rm --network "$DOCKER_NETWORK" --cpus 64
         --name "$WORKER_NAME"
         -v "$DATA_VOLUME"
         -d "$image"
@@ -259,23 +261,25 @@ run_suite() {
         while IFS= read -r query || [[ -n "$query" ]]; do
             [[ -z "$query" ]] && continue
 
-            log "[$suite] Submitting query: $query"
+            for iteration in $(seq 1 "$NUM_ITERATIONS"); do
+                log "[$suite] Submitting query: $query (iter $iteration/$NUM_ITERATIONS)"
 
-            local submit_output query_id
-            submit_output=$(submit_query "$suite" "$query")
-            query_id=$(echo "$submit_output" | tail -n 1)
+                local submit_output query_id
+                submit_output=$(submit_query "$suite" "$query")
+                query_id=$(echo "$submit_output" | tail -n 1)
 
-            log "[$suite] Query submitted with ID: $query_id"
+                log "[$suite] Query submitted with ID: $query_id"
 
-            local result
-            result=$(poll_query_status "$suite" "$query_id")
+                local result
+                result=$(poll_query_status "$suite" "$query_id")
 
-            local status started stopped error
-            IFS='|' read -r status started stopped error <<< "$result"
+                local status started stopped error
+                IFS='|' read -r status started stopped error <<< "$result"
 
-            log "[$suite] Query $query_id completed: $status"
-            add_result "$results_file" "$query" "$query_id" "$threads" \
-                       "$status" "$started" "$stopped" "$error"
+                log "[$suite] Query $query_id completed: $status"
+                add_result "$results_file" "$query" "$query_id" "$threads" \
+                           "$status" "$started" "$stopped" "$error"
+            done
 
         done < "$QUERIES_FILE"
 
@@ -304,6 +308,10 @@ while (( $# > 0 )); do
     case "$1" in
         -t|--threads)
             IFS=',' read -ra THREADS <<< "$2"
+            shift 2
+            ;;
+        -n|--iterations)
+            NUM_ITERATIONS="$2"
             shift 2
             ;;
         -q|--queries)
@@ -343,10 +351,11 @@ fi
 [[ -f "$QUERIES_FILE" ]] || die "Queries file not found: $QUERIES_FILE"
 mkdir -p "$OUTPUT_DIR"
 
-log "Suites to run: ${SUITES_TO_RUN[*]}"
-log "Thread counts: ${THREADS[*]}"
-log "Queries file:  $QUERIES_FILE"
-log "Output dir:    $OUTPUT_DIR"
+log "Suites to run:  ${SUITES_TO_RUN[*]}"
+log "Thread counts:  ${THREADS[*]}"
+log "Iterations:     $NUM_ITERATIONS"
+log "Queries file:   $QUERIES_FILE"
+log "Output dir:     $OUTPUT_DIR"
 
 for suite in "${SUITES_TO_RUN[@]}"; do
     run_suite "$suite"

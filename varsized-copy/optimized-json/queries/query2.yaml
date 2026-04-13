@@ -1,4 +1,4 @@
-query: SELECT extra FROM PERSON WHERE city == VARSIZED("redmond") AND state == VARSIZED("wy") INTO EXTRA_SINK
+query: SELECT ID FROM PERSON WHERE city == VARSIZED("redmond") AND state == VARSIZED("wy") INTO PERSON_ID_SINK
 
 sinks:
   - name: NAME_SINK 
@@ -25,7 +25,7 @@ sinks:
   - name: EXTRA_SINK
     host: worker-max:8080
     schema:
-      - name: PERSON$EXTRA
+      - name: PERSON$extra
         type: VARSIZED
     type: Void
     config: { }
@@ -107,7 +107,7 @@ physical:
       type: CSV
       fieldDelimiter: ","
     source_config:
-      file_path: "/work/large/nexmark/bid_6GB.csv"
+      file_path: "/work/large/nexmark-json/bid_6GB.json"
 
   - logical: AUCTION
     host: worker-max:8080
@@ -116,7 +116,7 @@ physical:
       type: CSV
       fieldDelimiter: ","
     source_config:
-      file_path: "/work/large/nexmark/auction_707MB.csv"
+      file_path: "/work/large/nexmark-json/auction_707MB.json"
 
   - logical: PERSON
     host: worker-max:8080
@@ -125,4 +125,4 @@ physical:
       type: CSV
       fieldDelimiter: ","
     source_config:
-      file_path: "/work/large/nexmark/person_840MB.csv"
+      file_path: "/work/large/nexmark-json/person_840MB.json"
