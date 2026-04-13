@@ -213,13 +213,8 @@ run_suite() {
     timestamp=$(date +%s)
     results_file="$OUTPUT_DIR/${suite}_results_${timestamp}.json"
 
-    # Parse buffer sizes for this suite
-    local buffer_sizes
-    read -ra buffer_sizes <<< "${SUITE_BUFFER_SIZES[$suite]}"
-
     log "========================================="
     log "Starting suite: $suite"
-    log "Buffer sizes: ${buffer_sizes[*]}"
     log "Results file: $results_file"
     log "========================================="
 
@@ -229,46 +224,44 @@ run_suite() {
     kill_worker
 
     for threads in "${THREADS[@]}"; do
-        for buffer_size in "${buffer_sizes[@]}"; do
-            log "-----------------------------------------"
-            log "[$suite] threads=$threads buffer_size=$buffer_size"
-            log "-----------------------------------------"
+        log "-----------------------------------------"
+        log "[$suite] Starting worker with $threads threads"
+        log "-----------------------------------------"
 
-            while IFS= read -r query || [[ -n "$query" ]]; do
-                [[ -z "$query" ]] && continue
+        local container_id
+        container_id=$(start_worker "$suite" "$threads")
+        log "[$suite] Worker started: $container_id"
+        sleep 2
 
-                for iteration in $(seq 1 "$NUM_ITERATIONS"); do
-                    # Worker restarts per query
-                    local container_id
-                    container_id=$(start_worker "$suite" "$threads" "$buffer_size")
-                    log "[$suite] Worker started: $container_id"
-                    sleep 2
+        while IFS= read -r query || [[ -n "$query" ]]; do
+            [[ -z "$query" ]] && continue
 
-                    log "[$suite] Submitting: $query (iter $iteration/$NUM_ITERATIONS)"
+            for iteration in $(seq 1 "$NUM_ITERATIONS"); do
+                log "[$suite] Submitting query: $query (iter $iteration/$NUM_ITERATIONS)"
 
-                    local submit_output query_id
-                    submit_output=$(submit_query "$suite" "$query")
-                    query_id=$(echo "$submit_output" | tail -n 1)
+                local submit_output query_id
+                submit_output=$(submit_query "$suite" "$query")
+                query_id=$(echo "$submit_output" | tail -n 1)
 
-                    log "[$suite] Query submitted with ID: $query_id"
+                log "[$suite] Query submitted with ID: $query_id"
 
-                    local result
-                    result=$(poll_query_status "$suite" "$query_id")
+                local result
+                result=$(poll_query_status "$suite" "$query_id")
 
-                    local status started stopped error
-                    IFS='|' read -r status started stopped error <<< "$result"
+                local status started stopped error
+                IFS='|' read -r status started stopped error <<< "$result"
 
-                    log "[$suite] Query $query_id completed: $status"
-                    add_result "$results_file" "$query" "$query_id" "$threads" \
-                               "$buffer_size" "$status" "$started" "$stopped" "$error"
+                log "[$suite] Query $query_id completed: $status"
+                add_result "$results_file" "$query" "$query_id" "$threads" \
+                           "$status" "$started" "$stopped" "$error"
+            done
 
-                    log "[$suite] Killing worker"
-                    kill_worker
-                done
-            done < "$QUERIES_FILE"
+        done < "$QUERIES_FILE"
 
-            log "[$suite] Completed threads=$threads buffer_size=$buffer_size"
-        done
+        log "[$suite] Killing worker"
+        kill_worker
+
+        log "[$suite] Completed benchmark for $threads threads"
     done
 
     log "========================================="
@@ -276,7 +269,7 @@ run_suite() {
     log "========================================="
 
     log "Summary:"
-    jq -r '.[] | "  Query \(.query_id) | Threads: \(.threads_number) | Buffer: \(.buffer_size) | Status: \(.status)"' "$results_file"
+    jq -r '.[] | "  Query \(.query_id) | Threads: \(.threads_number) | Status: \(.status)"' "$results_file"
 }
 
 # =============================================================================
