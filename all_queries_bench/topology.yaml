@@ -52,15 +52,13 @@ sinks:
         type: VARSIZED
     type: Void
     config: { }
-  - name: ID_MONITORING_SINK
+  - name: EXTRA_SINK
     host: worker-max:8080
     schema:
-      - name: person$id
-        type: INT32
-    type: Monitoring
-    config:
-      file_path: "/tmp/parsing_benchmark.csv"
-      size_of_input_data_in_bytes: 6678514674
+      - name: PERSON$EXTRA
+        type: VARSIZED
+    type: Void
+    config: { }
   - name: START_END_AUCTION_SINK
     host: worker-max:8080
     schema:
