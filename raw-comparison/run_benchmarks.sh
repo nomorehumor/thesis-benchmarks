@@ -114,14 +114,19 @@ start_worker() {
     fi
 }
 
+save_worker_logs() {
+    local log_file="$1"
+    sudo docker logs "$WORKER_NAME" > "$log_file" 2>&1 || true
+    log "Worker logs saved to $log_file"
+}
+
 kill_worker() {
     sudo docker kill "$WORKER_NAME" 2>/dev/null || true
-    # Wait for container to be fully removed
     sudo docker wait "$WORKER_NAME" 2>/dev/null || true
 }
 
 submit_query() {
-    local suite="$1" query="$2"
+    local suite="$1" query="$2" log_file="$3"
     local image="${SUITE_CLI_IMAGE[$suite]}"
     local topology="${SUITE_TOPOLOGY[$suite]}"
 
@@ -129,11 +134,11 @@ submit_query() {
         -v "$topology:/work/topology.yaml:ro" \
         "$image" \
         -t /work/topology.yaml \
-        -s "$WORKER_HOST" -d start "$query"
+        -s "$WORKER_HOST" -d start "$query" 2>>"$log_file"
 }
 
 query_status() {
-    local suite="$1"
+    local suite="$1" log_file="$2"
     local image="${SUITE_STATUS_CLI_IMAGE[$suite]}"
     local topology="${SUITE_TOPOLOGY[$suite]}"
 
@@ -141,7 +146,7 @@ query_status() {
         -v "$topology:/work/topology.yaml:ro" \
         "$image" \
         -t /work/topology.yaml \
-        -s "$WORKER_HOST" status
+        -s "$WORKER_HOST" status 2>>"$log_file"
 }
 
 # --- Results management ------------------------------------------------------
@@ -179,7 +184,7 @@ add_result() {
 # --- Polling -----------------------------------------------------------------
 
 poll_query_status() {
-    local suite="$1" query_id="$2"
+    local suite="$1" query_id="$2" log_file="$3"
     local start_time elapsed current_time
     start_time=$(date +%s)
 
@@ -196,7 +201,7 @@ poll_query_status() {
         fi
 
         local status_output
-        status_output=$(query_status "$suite")
+        status_output=$(query_status "$suite" "$log_file")
 
         local query_info
         query_info=$(echo "$status_output" | jq ".[] | select(.local_query_id == $query_id)")
@@ -232,13 +237,16 @@ poll_query_status() {
 
 run_suite() {
     local suite="$1"
-    local timestamp results_file
+    local timestamp results_file log_dir
     timestamp=$(date +%s)
     results_file="$OUTPUT_DIR/${suite}_results_${timestamp}.json"
+    log_dir="$OUTPUT_DIR/logs/${suite}_${timestamp}"
+    mkdir -p "$log_dir"
 
     log "========================================="
     log "Starting suite: $suite"
     log "Results file: $results_file"
+    log "Log dir: $log_dir"
     log "========================================="
 
     init_results_file "$results_file"
@@ -250,6 +258,8 @@ run_suite() {
         log "-----------------------------------------"
         log "[$suite] Starting worker with $threads threads"
         log "-----------------------------------------"
+
+        local cli_log="$log_dir/cli_${threads}.log"
 
         local container_id
         container_id=$(start_worker "$suite" "$threads")
@@ -265,13 +275,13 @@ run_suite() {
                 log "[$suite] Submitting query: $query (iter $iteration/$NUM_ITERATIONS)"
 
                 local submit_output query_id
-                submit_output=$(submit_query "$suite" "$query")
+                submit_output=$(submit_query "$suite" "$query" "$cli_log")
                 query_id=$(echo "$submit_output" | tail -n 1)
 
                 log "[$suite] Query submitted with ID: $query_id"
 
                 local result
-                result=$(poll_query_status "$suite" "$query_id")
+                result=$(poll_query_status "$suite" "$query_id" "$cli_log")
 
                 local status started stopped error
                 IFS='|' read -r status started stopped error <<< "$result"
@@ -282,6 +292,8 @@ run_suite() {
             done
 
         done < "$QUERIES_FILE"
+
+        save_worker_logs "$log_dir/worker_${threads}.log"
 
         log "[$suite] Killing worker"
         kill_worker

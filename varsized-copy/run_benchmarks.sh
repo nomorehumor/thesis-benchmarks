@@ -91,6 +91,12 @@ start_worker() {
         "--worker.default_query_execution.operator_buffer_size=$OPERATOR_BUFFER_SIZE"
 }
 
+save_worker_logs() {
+    local log_file="$1"
+    sudo docker logs "$WORKER_NAME" > "$log_file" 2>&1 || true
+    log "Worker logs saved to $log_file"
+}
+
 kill_worker() {
     sudo docker kill "$WORKER_NAME" 2>/dev/null || true
     sudo docker wait "$WORKER_NAME" 2>/dev/null || true
@@ -98,27 +104,27 @@ kill_worker() {
 
 # Submit query (blocking — returns query_id when the query finishes)
 submit_query() {
-    local suite="$1" query_file="$2"
+    local suite="$1" query_file="$2" log_file="$3"
     local image="${SUITE_CLI_IMAGE[$suite]}"
 
     local query_id
     query_id=$(sudo docker run --network "$DOCKER_NETWORK" \
         -v "$SCRIPT_DIR:/work/:ro" \
         "$image" \
-        -s "$WORKER_HOST" -w register -i "/work/$query_file" -x)
+        -s "$WORKER_HOST" -w register -i "/work/$query_file" -x 2>>"$log_file")
     echo "$query_id"
 }
 
 # Get status for a specific query_id (returns single JSON object)
 query_status() {
-    local suite="$1" query_id="$2"
+    local suite="$1" query_id="$2" log_file="$3"
     local image="${SUITE_STATUS_CLI_IMAGE[$suite]}"
 
     sudo docker run --network "$DOCKER_NETWORK" \
         -v "$SCRIPT_DIR/topology.yaml:/work/topology.yaml:ro" \
         -v "$SCRIPT_DIR/queries:/work/queries:ro" \
         "$image" \
-        -s "$WORKER_HOST" status "$query_id"
+        -s "$WORKER_HOST" status "$query_id" 2>>"$log_file"
 }
 
 # --- Results management ------------------------------------------------------
@@ -157,13 +163,16 @@ add_result() {
 
 run_suite() {
     local suite="$1"
-    local timestamp results_file
+    local timestamp results_file log_dir
     timestamp=$(date +%s)
     results_file="$OUTPUT_DIR/${suite}_results_${timestamp}.json"
+    log_dir="$OUTPUT_DIR/logs/${suite}_${timestamp}"
+    mkdir -p "$log_dir"
 
     log "========================================="
     log "Starting suite: $suite"
     log "Results file: $results_file"
+    log "Log dir: $log_dir"
     log "========================================="
 
     init_results_file "$results_file"
@@ -187,6 +196,8 @@ run_suite() {
         log "[$suite] Starting worker with $threads threads"
         log "-----------------------------------------"
 
+        local cli_log="$log_dir/cli_${threads}.log"
+
         local container_id
         container_id=$(start_worker "$suite" "$threads")
         log "[$suite] Worker started: $container_id"
@@ -201,12 +212,12 @@ run_suite() {
 
                 # Blocking submit — returns when query completes
                 local query_id
-                query_id=$(submit_query "$suite" "$rel_path")
+                query_id=$(submit_query "$suite" "$rel_path" "$cli_log")
 
                 log "[$suite] Query $query_id finished, fetching status..."
 
                 local status_output
-                status_output=$(query_status "$suite" "$query_id")
+                status_output=$(query_status "$suite" "$query_id" "$cli_log")
 
                 local state start_time_ms stop_time_ms
                 state=$(echo "$status_output" | jq -r '.state')
@@ -219,6 +230,8 @@ run_suite() {
                            "$state" "$start_time_ms" "$stop_time_ms"
             done
         done
+
+        save_worker_logs "$log_dir/worker_${threads}.log"
 
         log "[$suite] Killing worker"
         kill_worker
