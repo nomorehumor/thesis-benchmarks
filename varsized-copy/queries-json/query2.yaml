@@ -1,0 +1,128 @@
+query: SELECT ID FROM PERSON WHERE city == VARSIZED("redmond") AND state == VARSIZED("wy") INTO PERSON_ID_SINK
+
+sinks:
+  - name: NAME_SINK 
+    host: worker-max:8080
+    schema:
+      - name: PERSON$name
+        type: VARSIZED
+    type: Void
+    config: { }
+  - name: PERSON_ID_SINK 
+    host: worker-max:8080
+    schema:
+      - name: PERSON$ID
+        type: INT32
+    type: Void
+    config: { }
+  - name: BID_AUCTION_ID_SINK 
+    host: worker-max:8080
+    schema:
+      - name: BID$AUCTIONID
+        type: INT32
+    type: Void
+    config: { }
+  - name: EXTRA_SINK
+    host: worker-max:8080
+    schema:
+      - name: PERSON$extra
+        type: VARSIZED
+    type: Void
+    config: { }
+  - name: PERSON_SINK 
+    host: worker-max:8080
+    schema:
+      - name: PERSON$ID
+        type: INT32
+      - name: PERSON$NAME
+        type: VARSIZED
+      - name: PERSON$EMAIL_ADDRESS
+        type: VARSIZED
+      - name: PERSON$credit_card
+        type: VARSIZED
+      - name: PERSON$CITY
+        type: VARSIZED
+      - name: PERSON$STATE
+        type: VARSIZED
+      - name: PERSON$TIMESTAMP
+        type: UINT64
+      - name: PERSON$EXTRA
+        type: VARSIZED
+    type: Void
+    config: { }
+
+logical:
+  - name: BID
+    schema:
+      - name: timestamp
+        type: UINT64
+      - name: AUCTIONID
+        type: INT32
+      - name: bidder
+        type: INT32
+      - name: price
+        type: FLOAT64
+
+  - name: PERSON
+    schema:
+      - name: ID
+        type: INT32
+      - name: NAME
+        type: VARSIZED
+      - name: EMAIL_ADDRESS
+        type: VARSIZED
+      - name: CREDIT_CARD
+        type: VARSIZED
+      - name: CITY
+        type: VARSIZED
+      - name: STATE
+        type: VARSIZED
+      - name: TIMESTAMP
+        type: UINT64
+      - name: EXTRA
+        type: VARSIZED
+
+  - name: AUCTION
+    schema:
+      - name: timestamp
+        type: UINT64
+      - name: id
+        type: INT32
+      - name: initialBID
+        type: INT32
+      - name: reserve
+        type: INT32
+      - name: expires
+        type: UINT64
+      - name: seller
+        type: INT32
+      - name: category
+        type: INT32
+
+physical:
+  - logical: BID
+    host: worker-max:8080
+    type: File
+    parser_config:
+      type: CSV
+      fieldDelimiter: ","
+    source_config:
+      file_path: "/work/large/nexmark-json/bid_6GB.json"
+
+  - logical: AUCTION
+    host: worker-max:8080
+    type: File
+    parser_config:
+      type: CSV
+      fieldDelimiter: ","
+    source_config:
+      file_path: "/work/large/nexmark-json/auction_707MB.json"
+
+  - logical: PERSON
+    host: worker-max:8080
+    type: File
+    parser_config:
+      type: CSV
+      fieldDelimiter: ","
+    source_config:
+      file_path: "/work/large/nexmark-json/person_840MB.json"

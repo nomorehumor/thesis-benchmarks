@@ -101,7 +101,7 @@ start_worker() {
     # Insert extra volumes before -d if present
     if [[ -n "$extra" ]]; then
         # Rebuild command with extra volumes spliced in before -d
-        local cmd2=(sudo docker run --rm --network "$DOCKER_NETWORK"
+        local cmd2=(sudo docker run --rm --network "$DOCKER_NETWORK" --cpus 64
             --name "$WORKER_NAME"
             -v "$DATA_VOLUME"
             $extra

@@ -23,11 +23,11 @@ declare -A SUITE_STATUS_CLI_IMAGE
 
 SUITE_WORKER_IMAGE[baseline]="nebulastream/worker:maxim-popov-baseline-varsized-memcpy"
 SUITE_CLI_IMAGE[baseline]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
-SUITE_STATUS_CLI_IMAGE[baseline]="nebulastream/nebuli:maxim-popov-nebuli-update-x64"
+SUITE_STATUS_CLI_IMAGE[baseline]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
 
 SUITE_WORKER_IMAGE[optimized]="nebulastream/worker:maxim-popov-remove-memcpy-bench"
 SUITE_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
-SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-nebuli-update-x64"
+SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
 
 ALL_SUITES=(baseline optimized)
 
