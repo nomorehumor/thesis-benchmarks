@@ -8,7 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # =============================================================================
 
 THREADS=(2 4 8 16 32 48 64)
-NUM_ITERATIONS=1
+NUM_ITERATIONS=10
 DOCKER_NETWORK="mynet"
 WORKER_NAME="worker-max"
 WORKER_HOST="$WORKER_NAME:8080"

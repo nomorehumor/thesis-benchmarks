@@ -1,0 +1,129 @@
+[32m[21:51:07.626549] [I] [Not A Worker] [unnamed] [] [SingleNodeWorker.cpp:63] [SingleNodeWorker] Starting SingleNodeWorker SingleNodeWorker with configuration:
+worker.query_engine.number_of_worker_threads: 4
+worker.query_engine.admission_queue_size: 1000 (default)
+worker.default_query_execution.execution_mode: COMPILER (default)
+worker.default_query_execution.page_size: 1024 (default)
+worker.default_query_execution.number_of_partitions: 100 (default)
+worker.default_query_execution.number_of_records_per_key: 10 (default)
+worker.default_query_execution.max_number_of_buckets: 10000 (default)
+worker.default_query_execution.operator_buffer_size: 262144
+worker.default_query_optimization.join_strategy: OPTIMIZER_CHOOSES (default)
+worker.number_of_buffers_in_global_buffer_manager: 32768 (default)
+worker.default_max_inflight_buffers: 64 (default)
+worker.dump_compilation_result: NONE (default)
+worker.dump_graph: 0 (default)
+grpc: [::]:8080 (default)
+enable_event_trace: 0 (default)
+[m
+[36m[21:51:07.628175] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 8589934592 out of 540577120256 (so 1.5890303659045137%) available bytes[m
+[36m[21:51:07.715607] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=262144 numOfBuffers=32768[m
+[32m[21:51:07.722461] [I] [Not A Worker] [unnamed] [] [SingleNodeWorkerStarter.cpp:93] [main] Server listening on [::]:8080[m
+[36m[21:51:10.175908] [D] [Not A Worker] [unnamed] [queryId:578011244] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[21:51:10.175976] [D] [Not A Worker] [unnamed] [queryId:578011244] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[21:51:10.176180] [D] [Not A Worker] [unnamed] [queryId:578011244] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 578011244
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(1), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(2), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(3), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[36m[21:51:10.180369] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("BID_AUCTION_ID_SINK"), type: Void, Config: )[m
+[36m[21:51:10.190786] [D] [SingleNodeWorker] [WorkerThread-1] [Task:578011244-3] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[21:51:10.247640] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[21:51:10.249578] [D] [SingleNodeWorker] [WorkerThread-2] [Task:578011244-2] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[21:51:10.249654] [D] [SingleNodeWorker] [WorkerThread-2] [Task:578011244-2] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[36m[21:51:57.127725] [D] [SingleNodeWorker] [WorkerThread-3] [Task:578011244-2] [InputFormatter.hpp:348] [indexTrailingSpanningTupleProxy] last offset: 262143, first offset: 4[m
+[36m[21:52:00.832825] [D] [SingleNodeWorker] [WorkerThread-0] [Task:578011244-2] [InputFormatter.hpp:348] [indexTrailingSpanningTupleProxy] last offset: 262143, first offset: 59[m
+[36m[21:52:24.436336] [D] [SingleNodeWorker] [WorkerThread-0] [Task:578011244-2] [InputFormatter.hpp:348] [indexTrailingSpanningTupleProxy] last offset: 262143, first offset: 2[m
+[36m[21:52:44.949695] [D] [SingleNodeWorker] [WorkerThread-0] [Task:578011244-2] [InputFormatter.hpp:348] [indexTrailingSpanningTupleProxy] last offset: 262143, first offset: 12[m
+[36m[21:53:16.711380] [D] [SingleNodeWorker] [WorkerThread-0] [Task:578011244] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[21:53:16.711433] [D] [SingleNodeWorker] [WorkerThread-0] [Task:578011244] [SourceThread.cpp:248] [tryStop] SourceThread 2: stopped[m
+[32m[21:53:16.738020] [I] [SingleNodeWorker] [WorkerThread-1] [Task:578011244-3] [VoidSink.cpp:42] [stop] Void Sink completed.[m
+[32m[21:53:16.738133] [I] [SingleNodeWorker] [WorkerThread-2] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[21:53:16.738157] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:226] [tryStop] SourceThread 2: thread is not running[m
+[36m[21:53:19.134950] [D] [Not A Worker] [unnamed] [queryId:583194422] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[21:53:19.135019] [D] [Not A Worker] [unnamed] [queryId:583194422] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[21:53:19.135253] [D] [Not A Worker] [unnamed] [queryId:583194422] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 583194422
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(4), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(5), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::MapPhysicalOperator)
+                PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(6), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[36m[21:53:19.139227] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("ID_PRICE_AUCTION_SINK"), type: Void, Config: )[m
+[36m[21:53:19.148282] [D] [SingleNodeWorker] [WorkerThread-2] [Task:583194422-6] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[21:53:19.203151] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[21:53:19.210205] [D] [SingleNodeWorker] [WorkerThread-2] [Task:583194422-5] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[21:53:19.210238] [D] [SingleNodeWorker] [WorkerThread-2] [Task:583194422-5] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[36m[21:54:57.190025] [D] [SingleNodeWorker] [WorkerThread-1] [Task:583194422-5] [InputFormatter.hpp:348] [indexTrailingSpanningTupleProxy] last offset: 262143, first offset: 83[m
+[36m[21:55:25.623993] [D] [SingleNodeWorker] [WorkerThread-2] [Task:583194422] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[21:55:25.624042] [D] [SingleNodeWorker] [WorkerThread-2] [Task:583194422] [SourceThread.cpp:248] [tryStop] SourceThread 2: stopped[m
+[32m[21:55:25.655755] [I] [SingleNodeWorker] [WorkerThread-1] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[32m[21:55:25.658782] [I] [SingleNodeWorker] [WorkerThread-2] [Task:583194422-6] [VoidSink.cpp:42] [stop] Void Sink completed.[m
+[36m[21:55:25.658933] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:226] [tryStop] SourceThread 2: thread is not running[m
+[36m[21:55:28.524285] [D] [Not A Worker] [unnamed] [queryId:933776170] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[21:55:28.524339] [D] [Not A Worker] [unnamed] [queryId:933776170] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[21:55:28.524522] [D] [Not A Worker] [unnamed] [queryId:933776170] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 933776170
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(7), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(8), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(9), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[36m[21:55:28.527955] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("BID_AUCTION_ID_SINK"), type: Void, Config: )[m
+[36m[21:55:28.530081] [D] [SingleNodeWorker] [WorkerThread-3] [Task:933776170-9] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[21:55:28.583078] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[21:55:28.590503] [D] [SingleNodeWorker] [WorkerThread-3] [Task:933776170-8] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[21:55:28.590530] [D] [SingleNodeWorker] [WorkerThread-3] [Task:933776170-8] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[36m[21:55:38.045661] [D] [SingleNodeWorker] [WorkerThread-1] [Task:933776170-8] [InputFormatter.hpp:348] [indexTrailingSpanningTupleProxy] last offset: 262143, first offset: 22[m
+[36m[21:56:00.751219] [D] [SingleNodeWorker] [WorkerThread-2] [Task:933776170-8] [InputFormatter.hpp:348] [indexTrailingSpanningTupleProxy] last offset: 262143, first offset: 0[m
+[36m[21:56:34.603445] [D] [SingleNodeWorker] [WorkerThread-1] [Task:933776170-8] [InputFormatter.hpp:348] [indexTrailingSpanningTupleProxy] last offset: 262143, first offset: 37[m
+[36m[21:57:00.948262] [D] [SingleNodeWorker] [WorkerThread-3] [Task:933776170-8] [InputFormatter.hpp:348] [indexTrailingSpanningTupleProxy] last offset: 262143, first offset: 73[m
+[36m[21:57:34.948893] [D] [SingleNodeWorker] [WorkerThread-3] [Task:933776170] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[21:57:34.948940] [D] [SingleNodeWorker] [WorkerThread-3] [Task:933776170] [SourceThread.cpp:248] [tryStop] SourceThread 2: stopped[m
+[32m[21:57:34.974916] [I] [SingleNodeWorker] [WorkerThread-3] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[32m[21:57:34.975041] [I] [SingleNodeWorker] [WorkerThread-2] [Task:933776170-9] [VoidSink.cpp:42] [stop] Void Sink completed.[m
+[36m[21:57:34.975192] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:226] [tryStop] SourceThread 2: thread is not running[m
