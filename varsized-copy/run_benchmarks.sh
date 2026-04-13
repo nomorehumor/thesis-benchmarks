@@ -21,9 +21,9 @@ declare -A SUITE_CLI_IMAGE
 declare -A SUITE_STATUS_CLI_IMAGE
 declare -A SUITE_QUERIES_DIR
 
-SUITE_WORKER_IMAGE[baseline]="nebulastream/worker:maxim-popov-baseline-varsized-memcpy"
-SUITE_CLI_IMAGE[baseline]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
-SUITE_STATUS_CLI_IMAGE[baseline]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
+SUITE_WORKER_IMAGE[baseline]="nebulastream/worker:maxim-popov-nebuli-update"
+SUITE_CLI_IMAGE[baseline]="nebulastream/nebuli:maxim-popov-nebuli-update"
+SUITE_STATUS_CLI_IMAGE[baseline]="nebulastream/nebuli:maxim-popov-nebuli-update"
 SUITE_QUERIES_DIR[baseline]="$SCRIPT_DIR/queries"
 
 SUITE_WORKER_IMAGE[optimized]="nebulastream/worker:maxim-popov-remove-memcpy-bench"
@@ -31,9 +31,9 @@ SUITE_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
 SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
 SUITE_QUERIES_DIR[optimized]="$SCRIPT_DIR/queries"
 
-SUITE_WORKER_IMAGE[baseline-json]="nebulastream/worker:maxim-popov-baseline-varsized-memcpy"
-SUITE_CLI_IMAGE[baseline-json]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
-SUITE_STATUS_CLI_IMAGE[baseline-json]="nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy"
+SUITE_WORKER_IMAGE[baseline-json]="nebulastream/worker:maxim-popov-nebuli-update"
+SUITE_CLI_IMAGE[baseline-json]="nebulastream/nebuli:maxim-popov-nebuli-update"
+SUITE_STATUS_CLI_IMAGE[baseline-json]="nebulastream/nebuli:maxim-popov-nebuli-update"
 SUITE_QUERIES_DIR[baseline-json]="$SCRIPT_DIR/queries-json"
 
 SUITE_WORKER_IMAGE[optimized-json]="nebulastream/worker:maxim-popov-remove-memcpy-bench"
