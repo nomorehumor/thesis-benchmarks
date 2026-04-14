@@ -16,7 +16,7 @@ WORKER_NAME="worker-max"
 WORKER_HOST="$WORKER_NAME:8080"
 DATA_VOLUME="/data/users/maxim/large:/work/large:ro"
 OPERATOR_BUFFER_SIZE=262144
-NUM_ITERATIONS=1
+NUM_ITERATIONS=10
 
 # Suite definitions
 declare -A SUITE_WORKER_IMAGE
@@ -26,12 +26,12 @@ declare -A SUITE_TOPOLOGY
 
 SUITE_WORKER_IMAGE[baseline]="nebulastream/worker:maxim-popov-master-baseline"
 SUITE_CLI_IMAGE[baseline]="nebulastream/nes-cli:maxim-popov-master-baseline"
-SUITE_STATUS_CLI_IMAGE[baseline]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
+SUITE_STATUS_CLI_IMAGE[baseline]="nebulastream/nes-cli:maxim-popov-master-baseline"
 SUITE_TOPOLOGY[baseline]="$SCRIPT_DIR/topology-csv.yaml"
 
 SUITE_WORKER_IMAGE[optimized]="nebulastream/worker:maxim-popov-concat-varsized-materialization"
 SUITE_CLI_IMAGE[optimized]="nebulastream/nes-cli:maxim-popov-concat-varsized-materialization"
-SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
+SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nes-cli:maxim-popov-concat-varsized-materialization"
 SUITE_TOPOLOGY[optimized]="$SCRIPT_DIR/topology-csv.yaml"
 
 SUITE_WORKER_IMAGE[baseline-json]="nebulastream/worker:maxim-popov-master-baseline"
