@@ -1,0 +1,1124 @@
+[36m[10:45:45.925477] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 8589934592 out of 540577120256 (so 1.5890303659045137%) available bytes[m
+[36m[10:45:46.016475] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=262144 numOfBuffers=32768[m
+[32m[10:45:46.024176] [I] [Not A Worker] [unnamed] [] [SingleNodeWorkerStarter.cpp:85] [main] Server listening on worker-max:8080[m
+[36m[10:45:48.432394] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:45:48.432507] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:45:48.434010] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 1
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(1), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(2), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(3), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:45:48.434445] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 1[m
+[36m[10:45:48.437934] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:45:48.440294] [D] [SingleNodeWorker] [WorkerThread-2] [Task:1-3] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:45:48.538252] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[31m[1m[10:45:48.541259] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:45:48.541320] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:45:48.541331] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:45:48.541755] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1813', is not a valid value of type: int.
+ in Query 1.[m
+[36m[10:45:48.541918] [D] [SingleNodeWorker] [WorkerThread-0] [Task:1-2] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:45:48.542002] [D] [SingleNodeWorker] [WorkerThread-0] [Task:1-2] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:45:48.542500] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:45:48.542612] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 1.[m
+[31m[1m[10:45:48.542668] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:45:48.542702] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 2623', is not a valid value of type: int.
+ in Query 1.[m
+[31m[1m[10:45:48.545301] [E] [SingleNodeWorker] [WorkerThread-1] [Task:1-2] [SpanningTupleBufferState.cpp:201] [validateFinalState] Buffer at index 1 does still claim to own leading buffer[m
+[31m[1m[10:45:48.545408] [E] [SingleNodeWorker] [WorkerThread-1] [Task:1-2] [SpanningTupleBufferState.cpp:206] [validateFinalState] Buffer at index 1 still owns a trailing buffer reference[m
+[31m[1m[10:45:48.545458] [E] [SingleNodeWorker] [WorkerThread-1] [Task:1-2] [SpanningTupleBufferState.cpp:186] [validateFinalState] Buffer at index 2 does still claim to own leading buffer[m
+[31m[1m[10:45:48.545733] [E] [SingleNodeWorker] [WorkerThread-1] [Task:1-2] [SpanningTupleBufferState.cpp:191] [validateFinalState] Buffer at index 2 still owns a leading buffer reference[m
+[31m[1m[10:45:48.546144] [E] [SingleNodeWorker] [WorkerThread-1] [Task:1-2] [SequenceShredder.cpp:59] [~SequenceShredder] Failed to validate SequenceShredder[m
+[31m[1m[10:45:48.557045] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:45:48.557089] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 3434', is not a valid value of type: int.
+[m
+[36m[10:45:53.814635] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:45:53.814744] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:45:53.816208] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 2
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(4), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(5), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(6), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:45:53.816527] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 2[m
+[36m[10:45:53.820215] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:45:53.826095] [D] [SingleNodeWorker] [WorkerThread-0] [Task:2-6] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:45:53.922608] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:45:53.924832] [D] [SingleNodeWorker] [WorkerThread-0] [Task:2-5] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:45:53.924859] [D] [SingleNodeWorker] [WorkerThread-0] [Task:2-5] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:45:53.925049] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:45:53.925103] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:45:53.925117] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:45:53.925445] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 2.[m
+[32m[10:45:53.925606] [I] [SingleNodeWorker] [WorkerThread-0] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:45:55.704851] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:45:55.704957] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:45:55.706387] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 3
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(7), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(8), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(9), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:45:55.706702] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 3[m
+[36m[10:45:55.710208] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:45:55.712313] [D] [SingleNodeWorker] [WorkerThread-2] [Task:3-9] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:45:55.808565] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:45:55.810691] [D] [SingleNodeWorker] [WorkerThread-2] [Task:3-8] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:45:55.810720] [D] [SingleNodeWorker] [WorkerThread-2] [Task:3-8] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:45:55.810926] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:45:55.811007] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:45:55.811022] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:45:55.811335] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 3.[m
+[31m[1m[10:45:55.812251] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:45:55.812278] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 2624', is not a valid value of type: int.
+ in Query 3.[m
+[31m[1m[10:45:55.814070] [E] [SingleNodeWorker] [WorkerThread-1] [Task:3-8] [SpanningTupleBufferState.cpp:201] [validateFinalState] Buffer at index 2 does still claim to own leading buffer[m
+[31m[1m[10:45:55.814169] [E] [SingleNodeWorker] [WorkerThread-1] [Task:3-8] [SpanningTupleBufferState.cpp:206] [validateFinalState] Buffer at index 2 still owns a trailing buffer reference[m
+[31m[1m[10:45:55.814218] [E] [SingleNodeWorker] [WorkerThread-1] [Task:3-8] [SpanningTupleBufferState.cpp:186] [validateFinalState] Buffer at index 3 does still claim to own leading buffer[m
+[31m[1m[10:45:55.814259] [E] [SingleNodeWorker] [WorkerThread-1] [Task:3-8] [SpanningTupleBufferState.cpp:191] [validateFinalState] Buffer at index 3 still owns a leading buffer reference[m
+[31m[1m[10:45:55.814668] [E] [SingleNodeWorker] [WorkerThread-1] [Task:3-8] [SequenceShredder.cpp:59] [~SequenceShredder] Failed to validate SequenceShredder[m
+[31m[1m[10:45:55.826131] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:45:55.826177] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 1812', is not a valid value of type: int.
+[m
+[36m[10:45:57.598605] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:45:57.598712] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:45:57.600160] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 4
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(10), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(11), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(12), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:45:57.600475] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 4[m
+[36m[10:45:57.603679] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:45:57.604202] [D] [SingleNodeWorker] [WorkerThread-0] [Task:4-12] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:45:57.699183] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:45:57.700870] [D] [SingleNodeWorker] [WorkerThread-0] [Task:4-11] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:45:57.700900] [D] [SingleNodeWorker] [WorkerThread-0] [Task:4-11] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:45:57.701104] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:45:57.701174] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:45:57.701189] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:45:57.701280] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 4.[m
+[31m[1m[10:45:57.702158] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:45:57.702192] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 2623', is not a valid value of type: int.
+ in Query 4.[m
+[32m[10:45:57.702676] [I] [SingleNodeWorker] [WorkerThread-1] [Task:4-11] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[31m[1m[10:45:57.712806] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:45:57.712849] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 1812', is not a valid value of type: int.
+[m
+[36m[10:45:59.545627] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:45:59.545742] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:45:59.547201] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 5
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(13), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(14), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(15), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:45:59.547520] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 5[m
+[36m[10:45:59.551760] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:45:59.555573] [D] [SingleNodeWorker] [WorkerThread-0] [Task:5-15] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:45:59.648777] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:45:59.650850] [D] [SingleNodeWorker] [WorkerThread-0] [Task:5-14] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:45:59.650877] [D] [SingleNodeWorker] [WorkerThread-0] [Task:5-14] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:45:59.651099] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:45:59.651172] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:45:59.651186] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:45:59.651536] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 5.[m
+[32m[10:45:59.651700] [I] [SingleNodeWorker] [WorkerThread-0] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:01.416375] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:01.416488] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:01.417922] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 6
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(16), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(17), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(18), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:01.418235] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 6[m
+[36m[10:46:01.421794] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:46:01.425252] [D] [SingleNodeWorker] [WorkerThread-3] [Task:6-18] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:01.517751] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:01.519741] [D] [SingleNodeWorker] [WorkerThread-3] [Task:6-17] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:01.519764] [D] [SingleNodeWorker] [WorkerThread-3] [Task:6-17] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:01.519935] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:01.519996] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:01.520008] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:01.520645] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 6.[m
+[32m[10:46:01.520805] [I] [SingleNodeWorker] [WorkerThread-3] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:03.330619] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:03.330758] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:03.332477] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 7
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(19), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(20), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(21), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:03.332797] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 7[m
+[36m[10:46:03.336068] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:46:03.350673] [D] [SingleNodeWorker] [WorkerThread-1] [Task:7-21] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:03.442914] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:03.444658] [D] [SingleNodeWorker] [WorkerThread-1] [Task:7-20] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:03.444682] [D] [SingleNodeWorker] [WorkerThread-1] [Task:7-20] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:03.444852] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:03.444929] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:03.444943] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:03.445100] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 7.[m
+[32m[10:46:03.448209] [I] [SingleNodeWorker] [WorkerThread-3] [Task:7-20] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[31m[1m[10:46:03.458475] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:03.458523] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 1812', is not a valid value of type: int.
+[m
+[36m[10:46:05.407705] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:05.407820] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:05.409251] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 8
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(22), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(23), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(24), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:05.409565] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 8[m
+[36m[10:46:05.412905] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:46:05.413988] [D] [SingleNodeWorker] [WorkerThread-2] [Task:8-24] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:05.506510] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:05.508349] [D] [SingleNodeWorker] [WorkerThread-2] [Task:8-23] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:05.508375] [D] [SingleNodeWorker] [WorkerThread-2] [Task:8-23] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:05.508536] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:05.508606] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:05.508619] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:05.508709] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 8.[m
+[32m[10:46:05.508861] [I] [SingleNodeWorker] [WorkerThread-2] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:07.310473] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:07.310585] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:07.312044] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 9
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(25), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(26), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(27), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:07.312359] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 9[m
+[36m[10:46:07.316194] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:46:07.323017] [D] [SingleNodeWorker] [WorkerThread-3] [Task:9-27] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:07.411977] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:07.414043] [D] [SingleNodeWorker] [WorkerThread-3] [Task:9-26] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:07.414066] [D] [SingleNodeWorker] [WorkerThread-3] [Task:9-26] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:07.414228] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:07.414280] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:07.414292] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:07.414775] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 9.[m
+[32m[10:46:07.414958] [I] [SingleNodeWorker] [WorkerThread-3] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:09.138760] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:09.138871] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:09.140329] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 10
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(28), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(29), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::MapPhysicalOperator)
+            PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(30), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:09.140643] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 10[m
+[36m[10:46:09.143958] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("EXTRA_SINK"), type: Void, Config: )[m
+[36m[10:46:09.145220] [D] [SingleNodeWorker] [WorkerThread-3] [Task:10-30] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:09.235938] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[31m[1m[10:46:09.238854] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:09.238963] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:09.238976] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:09.239493] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1813', is not a valid value of type: int.
+ in Query 10.[m
+[36m[10:46:09.240058] [D] [SingleNodeWorker] [WorkerThread-0] [Task:10-29] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:09.240150] [D] [SingleNodeWorker] [WorkerThread-0] [Task:10-29] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:09.240384] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:09.240414] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 2623', is not a valid value of type: int.
+ in Query 10.[m
+[31m[1m[10:46:09.240687] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:09.240794] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 10.[m
+[31m[1m[10:46:09.243453] [E] [SingleNodeWorker] [WorkerThread-2] [Task:10-29] [SpanningTupleBufferState.cpp:201] [validateFinalState] Buffer at index 1 does still claim to own leading buffer[m
+[31m[1m[10:46:09.243562] [E] [SingleNodeWorker] [WorkerThread-2] [Task:10-29] [SpanningTupleBufferState.cpp:206] [validateFinalState] Buffer at index 1 still owns a trailing buffer reference[m
+[31m[1m[10:46:09.243606] [E] [SingleNodeWorker] [WorkerThread-2] [Task:10-29] [SpanningTupleBufferState.cpp:186] [validateFinalState] Buffer at index 2 does still claim to own leading buffer[m
+[31m[1m[10:46:09.243655] [E] [SingleNodeWorker] [WorkerThread-2] [Task:10-29] [SpanningTupleBufferState.cpp:191] [validateFinalState] Buffer at index 2 still owns a leading buffer reference[m
+[31m[1m[10:46:09.244066] [E] [SingleNodeWorker] [WorkerThread-2] [Task:10-29] [SequenceShredder.cpp:59] [~SequenceShredder] Failed to validate SequenceShredder[m
+[31m[1m[10:46:09.254946] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:09.255022] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 3434', is not a valid value of type: int.
+[m
+[36m[10:46:11.041685] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:11.041753] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:11.042005] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 11
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(31), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(32), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(33), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:11.042161] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 11[m
+[36m[10:46:11.045117] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:11.046646] [D] [SingleNodeWorker] [WorkerThread-1] [Task:11-33] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:11.244644] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:11.246697] [D] [SingleNodeWorker] [WorkerThread-1] [Task:11-32] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:11.246722] [D] [SingleNodeWorker] [WorkerThread-1] [Task:11-32] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:11.246880] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:11.246945] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:11.246961] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:11.247424] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 11.[m
+[32m[10:46:11.247586] [I] [SingleNodeWorker] [WorkerThread-1] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:13.104670] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:13.104780] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:13.105288] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 12
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(34), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(35), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(36), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:13.105600] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 12[m
+[36m[10:46:13.109427] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:13.112327] [D] [SingleNodeWorker] [WorkerThread-2] [Task:12-36] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:13.308726] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[31m[1m[10:46:13.311728] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:13.311814] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:13.311828] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:13.312087] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1813', is not a valid value of type: int.
+ in Query 12.[m
+[36m[10:46:13.312404] [D] [SingleNodeWorker] [WorkerThread-3] [Task:12-35] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:13.312482] [D] [SingleNodeWorker] [WorkerThread-3] [Task:12-35] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:13.312976] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:13.312990] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:13.313004] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 2623', is not a valid value of type: int.
+ in Query 12.[m
+[31m[1m[10:46:13.313101] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 12.[m
+[31m[1m[10:46:13.315507] [E] [SingleNodeWorker] [WorkerThread-0] [Task:12-35] [SpanningTupleBufferState.cpp:201] [validateFinalState] Buffer at index 1 does still claim to own leading buffer[m
+[31m[1m[10:46:13.315621] [E] [SingleNodeWorker] [WorkerThread-0] [Task:12-35] [SpanningTupleBufferState.cpp:206] [validateFinalState] Buffer at index 1 still owns a trailing buffer reference[m
+[31m[1m[10:46:13.315666] [E] [SingleNodeWorker] [WorkerThread-0] [Task:12-35] [SpanningTupleBufferState.cpp:186] [validateFinalState] Buffer at index 2 does still claim to own leading buffer[m
+[31m[1m[10:46:13.315719] [E] [SingleNodeWorker] [WorkerThread-0] [Task:12-35] [SpanningTupleBufferState.cpp:191] [validateFinalState] Buffer at index 2 still owns a leading buffer reference[m
+[31m[1m[10:46:13.316115] [E] [SingleNodeWorker] [WorkerThread-0] [Task:12-35] [SequenceShredder.cpp:59] [~SequenceShredder] Failed to validate SequenceShredder[m
+[31m[1m[10:46:13.325789] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:13.325847] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 3434', is not a valid value of type: int.
+[m
+[36m[10:46:15.117789] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:15.117862] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:15.118154] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 13
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(37), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(38), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(39), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:15.118334] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 13[m
+[36m[10:46:15.121905] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:15.123130] [D] [SingleNodeWorker] [WorkerThread-3] [Task:13-39] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:15.319943] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:15.322057] [D] [SingleNodeWorker] [WorkerThread-3] [Task:13-38] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:15.322082] [D] [SingleNodeWorker] [WorkerThread-3] [Task:13-38] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:15.322241] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:15.322313] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:15.322325] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:15.322709] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 13.[m
+[32m[10:46:15.322880] [I] [SingleNodeWorker] [WorkerThread-3] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:17.170526] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:17.170639] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:17.171168] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 14
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(40), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(41), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(42), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:17.171483] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 14[m
+[36m[10:46:17.175712] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:17.176990] [D] [SingleNodeWorker] [WorkerThread-2] [Task:14-42] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:17.378642] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:17.380764] [D] [SingleNodeWorker] [WorkerThread-2] [Task:14-41] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:17.380789] [D] [SingleNodeWorker] [WorkerThread-2] [Task:14-41] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:17.380962] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:17.381021] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:17.381035] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:17.381383] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 14.[m
+[31m[1m[10:46:17.382233] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:17.382258] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 2624', is not a valid value of type: int.
+ in Query 14.[m
+[31m[1m[10:46:17.383370] [E] [SingleNodeWorker] [WorkerThread-3] [Task:14-41] [SpanningTupleBufferState.cpp:201] [validateFinalState] Buffer at index 2 does still claim to own leading buffer[m
+[31m[1m[10:46:17.383471] [E] [SingleNodeWorker] [WorkerThread-3] [Task:14-41] [SpanningTupleBufferState.cpp:206] [validateFinalState] Buffer at index 2 still owns a trailing buffer reference[m
+[31m[1m[10:46:17.383519] [E] [SingleNodeWorker] [WorkerThread-3] [Task:14-41] [SpanningTupleBufferState.cpp:186] [validateFinalState] Buffer at index 3 does still claim to own leading buffer[m
+[31m[1m[10:46:17.383561] [E] [SingleNodeWorker] [WorkerThread-3] [Task:14-41] [SpanningTupleBufferState.cpp:191] [validateFinalState] Buffer at index 3 still owns a leading buffer reference[m
+[31m[1m[10:46:17.383972] [E] [SingleNodeWorker] [WorkerThread-3] [Task:14-41] [SequenceShredder.cpp:59] [~SequenceShredder] Failed to validate SequenceShredder[m
+[31m[1m[10:46:17.394443] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:17.394489] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 1812', is not a valid value of type: int.
+[m
+[36m[10:46:19.224150] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:19.224223] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:19.224497] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 15
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(43), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(44), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(45), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:19.224669] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 15[m
+[36m[10:46:19.227783] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:19.229469] [D] [SingleNodeWorker] [WorkerThread-0] [Task:15-45] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:19.433798] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:19.435886] [D] [SingleNodeWorker] [WorkerThread-0] [Task:15-44] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:19.435911] [D] [SingleNodeWorker] [WorkerThread-0] [Task:15-44] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:19.436097] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:19.436167] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:19.436186] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:19.436637] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 15.[m
+[32m[10:46:19.436803] [I] [SingleNodeWorker] [WorkerThread-0] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:21.347613] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:21.347725] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:21.348233] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 16
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(46), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(47), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(48), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:21.348545] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 16[m
+[36m[10:46:21.352099] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:21.355018] [D] [SingleNodeWorker] [WorkerThread-1] [Task:16-48] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:21.549022] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:21.550622] [D] [SingleNodeWorker] [WorkerThread-1] [Task:16-47] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:21.550660] [D] [SingleNodeWorker] [WorkerThread-1] [Task:16-47] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:21.550829] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:21.550882] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:21.550904] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:21.551174] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 16.[m
+[32m[10:46:21.554171] [I] [SingleNodeWorker] [WorkerThread-2] [Task:16-47] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[31m[1m[10:46:21.565176] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:21.565259] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 1812', is not a valid value of type: int.
+[m
+[36m[10:46:23.412413] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:23.412495] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:23.412827] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 17
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(49), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(50), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(51), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:23.413033] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 17[m
+[36m[10:46:23.416727] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:23.417792] [D] [SingleNodeWorker] [WorkerThread-1] [Task:17-51] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:23.616385] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:23.618110] [D] [SingleNodeWorker] [WorkerThread-1] [Task:17-50] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:23.618132] [D] [SingleNodeWorker] [WorkerThread-1] [Task:17-50] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:23.618295] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:23.618364] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:23.618377] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:23.618492] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 17.[m
+[32m[10:46:23.618659] [I] [SingleNodeWorker] [WorkerThread-1] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:25.417662] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:25.417775] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:25.418284] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 18
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(52), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(53), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(54), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:25.418598] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 18[m
+[36m[10:46:25.422373] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:25.426893] [D] [SingleNodeWorker] [WorkerThread-0] [Task:18-54] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:25.625282] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:25.627348] [D] [SingleNodeWorker] [WorkerThread-0] [Task:18-53] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:25.627371] [D] [SingleNodeWorker] [WorkerThread-0] [Task:18-53] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:25.627551] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:25.627618] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:25.627631] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:25.628100] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 18.[m
+[32m[10:46:25.628269] [I] [SingleNodeWorker] [WorkerThread-0] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:27.558413] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:27.558476] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:27.558698] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 19
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(55), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(56), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(57), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:27.558837] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 19[m
+[36m[10:46:27.561671] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:27.569890] [D] [SingleNodeWorker] [WorkerThread-3] [Task:19-57] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:27.764405] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:27.766495] [D] [SingleNodeWorker] [WorkerThread-3] [Task:19-56] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:27.766518] [D] [SingleNodeWorker] [WorkerThread-3] [Task:19-56] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:27.766691] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:27.766740] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:27.766751] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:27.767261] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 19.[m
+[32m[10:46:27.767433] [I] [SingleNodeWorker] [WorkerThread-3] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[36m[10:46:29.702368] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:29.702477] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:29.703008] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 20
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(58), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(59), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::SelectionPhysicalOperator)
+            PhysicalOperator(NES::MapPhysicalOperator)
+              PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(60), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:29.703322] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 20[m
+[36m[10:46:29.707448] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_ID_SINK"), type: Void, Config: )[m
+[36m[10:46:29.707938] [D] [SingleNodeWorker] [WorkerThread-1] [Task:20-60] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:29.910168] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:29.912236] [D] [SingleNodeWorker] [WorkerThread-0] [Task:20-59] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:29.912260] [D] [SingleNodeWorker] [WorkerThread-0] [Task:20-59] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:29.912434] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:29.912504] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:29.912516] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:29.912880] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 20.[m
+[32m[10:46:29.913037] [I] [SingleNodeWorker] [WorkerThread-0] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[33m[1m[10:46:31.766929] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:31.767153] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:31.767220] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:31.767680] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 21
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(61), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(62), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(63), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:31.767990] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 21[m
+[36m[10:46:31.771150] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:31.771756] [D] [SingleNodeWorker] [WorkerThread-0] [Task:21-63] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:31.885691] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:31.887825] [D] [SingleNodeWorker] [WorkerThread-0] [Task:21-62] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:31.887852] [D] [SingleNodeWorker] [WorkerThread-0] [Task:21-62] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:31.888025] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:31.888102] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:31.888116] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:31.888490] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 21.[m
+[31m[1m[10:46:31.889328] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:31.889354] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 2624', is not a valid value of type: int.
+ in Query 21.[m
+[31m[1m[10:46:31.890540] [E] [SingleNodeWorker] [WorkerThread-2] [Task:21-62] [SpanningTupleBufferState.cpp:201] [validateFinalState] Buffer at index 2 does still claim to own leading buffer[m
+[31m[1m[10:46:31.890638] [E] [SingleNodeWorker] [WorkerThread-2] [Task:21-62] [SpanningTupleBufferState.cpp:206] [validateFinalState] Buffer at index 2 still owns a trailing buffer reference[m
+[31m[1m[10:46:31.890685] [E] [SingleNodeWorker] [WorkerThread-2] [Task:21-62] [SpanningTupleBufferState.cpp:186] [validateFinalState] Buffer at index 3 does still claim to own leading buffer[m
+[31m[1m[10:46:31.890729] [E] [SingleNodeWorker] [WorkerThread-2] [Task:21-62] [SpanningTupleBufferState.cpp:191] [validateFinalState] Buffer at index 3 still owns a leading buffer reference[m
+[31m[1m[10:46:31.891161] [E] [SingleNodeWorker] [WorkerThread-2] [Task:21-62] [SequenceShredder.cpp:59] [~SequenceShredder] Failed to validate SequenceShredder[m
+[31m[1m[10:46:31.902886] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:31.902939] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 1812', is not a valid value of type: int.
+[m
+[33m[1m[10:46:33.836447] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:33.836670] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:33.836736] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:33.837196] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 22
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(64), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(65), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(66), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:33.837505] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 22[m
+[36m[10:46:33.840612] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:33.843516] [D] [SingleNodeWorker] [WorkerThread-3] [Task:22-66] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:33.958182] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:33.960307] [D] [SingleNodeWorker] [WorkerThread-0] [Task:22-65] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:33.960330] [D] [SingleNodeWorker] [WorkerThread-0] [Task:22-65] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:33.960503] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:33.960565] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:33.960578] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:33.960971] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 22.[m
+[32m[10:46:33.961132] [I] [SingleNodeWorker] [WorkerThread-0] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[33m[1m[10:46:35.816262] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:35.816486] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:35.816554] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:35.817021] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 23
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(67), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(68), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(69), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:35.817331] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 23[m
+[36m[10:46:35.820560] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:35.821539] [D] [SingleNodeWorker] [WorkerThread-0] [Task:23-69] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:35.936754] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:35.938892] [D] [SingleNodeWorker] [WorkerThread-0] [Task:23-68] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:35.938940] [D] [SingleNodeWorker] [WorkerThread-0] [Task:23-68] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:35.939122] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:35.939175] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:35.939188] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:35.939581] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 23.[m
+[31m[1m[10:46:35.940447] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:35.940472] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 2624', is not a valid value of type: int.
+ in Query 23.[m
+[31m[1m[10:46:35.941830] [E] [SingleNodeWorker] [WorkerThread-1] [Task:23-68] [SpanningTupleBufferState.cpp:201] [validateFinalState] Buffer at index 2 does still claim to own leading buffer[m
+[31m[1m[10:46:35.941966] [E] [SingleNodeWorker] [WorkerThread-1] [Task:23-68] [SpanningTupleBufferState.cpp:206] [validateFinalState] Buffer at index 2 still owns a trailing buffer reference[m
+[31m[1m[10:46:35.942015] [E] [SingleNodeWorker] [WorkerThread-1] [Task:23-68] [SpanningTupleBufferState.cpp:186] [validateFinalState] Buffer at index 3 does still claim to own leading buffer[m
+[31m[1m[10:46:35.942058] [E] [SingleNodeWorker] [WorkerThread-1] [Task:23-68] [SpanningTupleBufferState.cpp:191] [validateFinalState] Buffer at index 3 still owns a leading buffer reference[m
+[31m[1m[10:46:35.942474] [E] [SingleNodeWorker] [WorkerThread-1] [Task:23-68] [SequenceShredder.cpp:59] [~SequenceShredder] Failed to validate SequenceShredder[m
+[31m[1m[10:46:35.953291] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[31m[1m[10:46:35.953366] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:93] [operator()] Query Failure could not be reported as query has already been terminated. Original Error: cannot format malformed string value; Value '{"ID": 1812', is not a valid value of type: int.
+[m
+[33m[1m[10:46:37.880864] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:37.881090] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:37.881157] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:37.881627] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 24
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(70), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(71), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(72), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:37.881938] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 24[m
+[36m[10:46:37.885306] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:37.886576] [D] [SingleNodeWorker] [WorkerThread-2] [Task:24-72] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:38.002846] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:38.004937] [D] [SingleNodeWorker] [WorkerThread-2] [Task:24-71] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:38.004959] [D] [SingleNodeWorker] [WorkerThread-2] [Task:24-71] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:38.005128] [E] [SingleNodeWorker] [WorkerThread-2] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:38.005181] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:38.005197] [D] [SingleNodeWorker] [WorkerThread-2] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:38.005580] [E] [SingleNodeWorker] [WorkerThread-2] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 24.[m
+[32m[10:46:38.005732] [I] [SingleNodeWorker] [WorkerThread-2] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[33m[1m[10:46:39.824215] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:39.824438] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:39.824505] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:39.824972] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 25
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(73), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(74), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(75), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:39.825279] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 25[m
+[36m[10:46:39.828378] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:39.828919] [D] [SingleNodeWorker] [WorkerThread-1] [Task:25-75] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:39.939137] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:39.941251] [D] [SingleNodeWorker] [WorkerThread-1] [Task:25-74] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:39.941276] [D] [SingleNodeWorker] [WorkerThread-1] [Task:25-74] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:39.941451] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:39.941506] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:39.941519] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:39.941890] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 25.[m
+[32m[10:46:39.942054] [I] [SingleNodeWorker] [WorkerThread-1] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[33m[1m[10:46:41.906238] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:41.906461] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:41.906524] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:41.907015] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 26
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(76), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(77), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(78), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:41.907328] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 26[m
+[36m[10:46:41.910583] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:41.914459] [D] [SingleNodeWorker] [WorkerThread-0] [Task:26-78] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:42.028168] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:42.030253] [D] [SingleNodeWorker] [WorkerThread-0] [Task:26-77] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:42.030278] [D] [SingleNodeWorker] [WorkerThread-0] [Task:26-77] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:42.030457] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:42.030514] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:42.030528] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:42.030901] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 26.[m
+[32m[10:46:42.031086] [I] [SingleNodeWorker] [WorkerThread-0] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[33m[1m[10:46:43.936496] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:43.936605] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:43.936629] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:43.936798] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 27
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(79), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(80), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(81), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:43.936908] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 27[m
+[36m[10:46:43.940077] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:43.941125] [D] [SingleNodeWorker] [WorkerThread-0] [Task:27-81] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:44.055672] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:44.057312] [D] [SingleNodeWorker] [WorkerThread-3] [Task:27-80] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:44.057336] [D] [SingleNodeWorker] [WorkerThread-3] [Task:27-80] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:44.057499] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:44.057561] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:44.057574] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:44.057741] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 27.[m
+[32m[10:46:44.057894] [I] [SingleNodeWorker] [WorkerThread-3] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[33m[1m[10:46:45.893677] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:45.893896] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:45.893964] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:45.894424] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 28
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(82), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(83), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(84), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:45.894733] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 28[m
+[36m[10:46:45.897939] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:45.902576] [D] [SingleNodeWorker] [WorkerThread-0] [Task:28-84] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:46.018789] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:46.020870] [D] [SingleNodeWorker] [WorkerThread-0] [Task:28-83] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:46.020893] [D] [SingleNodeWorker] [WorkerThread-0] [Task:28-83] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:46.021066] [E] [SingleNodeWorker] [WorkerThread-0] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:46.021118] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:46.021130] [D] [SingleNodeWorker] [WorkerThread-0] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:46.021518] [E] [SingleNodeWorker] [WorkerThread-0] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 28.[m
+[32m[10:46:46.021679] [I] [SingleNodeWorker] [WorkerThread-0] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[33m[1m[10:46:47.911519] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:47.911746] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:47.911815] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:47.912281] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 29
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(85), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(86), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(87), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:47.912590] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 29[m
+[36m[10:46:47.915906] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:47.921089] [D] [SingleNodeWorker] [WorkerThread-1] [Task:29-87] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:48.035186] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:48.036836] [D] [SingleNodeWorker] [WorkerThread-1] [Task:29-86] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:48.036859] [D] [SingleNodeWorker] [WorkerThread-1] [Task:29-86] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:48.037019] [E] [SingleNodeWorker] [WorkerThread-1] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:48.037068] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:48.037081] [D] [SingleNodeWorker] [WorkerThread-1] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:48.037323] [E] [SingleNodeWorker] [WorkerThread-1] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 29.[m
+[32m[10:46:48.037476] [I] [SingleNodeWorker] [WorkerThread-1] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
+[33m[1m[10:46:50.015036] [W] [Not A Worker] [unnamed] [] [SinkDescriptor.cpp:64] [getFormatType] Sinks of the type Void do not have an INPUT_FORMAT parameter.[m
+[36m[10:46:50.015262] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:110] [initialize] NES memory allocation requires 1 out of 540577120256 (so 1.8498748143954595e-10%) available bytes[m
+[36m[10:46:50.015321] [D] [Not A Worker] [unnamed] [] [BufferManager.cpp:160] [initialize] BufferManager configuration bufferSize=1 numOfBuffers=1[m
+[36m[10:46:50.015790] [D] [Not A Worker] [unnamed] [] [PipeliningPhase.cpp:365] [apply] Constructed pipeline plan with 1 root pipelines.
+PipelinedQueryPlan for Query: 30
+Number of root pipelines: 1
+------------------
+Root Pipeline 0:
+  Pipeline(ID(88), Provider(COMPILER))
+  Operator chain:
+    PhysicalOperator(NES::SourcePhysicalOperator)
+  Successor Pipeline:
+    Pipeline(ID(89), Provider(None))
+      Operator chain:
+        PhysicalOperator(NES::ScanPhysicalOperator)
+          PhysicalOperator(NES::EmitPhysicalOperator)
+      Successor Pipeline:
+        Pipeline(ID(90), Provider(None))
+          Operator chain:
+            PhysicalOperator(NES::SinkPhysicalOperator)
+
+[m
+[32m[10:46:50.016102] [I] [Not A Worker] [unnamed] [] [NodeEngine.cpp:55] [registerQuery] Register 30[m
+[36m[10:46:50.019333] [D] [Not A Worker] [unnamed] [] [SinkProvider.cpp:30] [lower] The sinkDescriptor is: SinkDescriptor: (name: variant("PERSON_SINK"), type: Void, Config: )[m
+[36m[10:46:50.023934] [D] [SingleNodeWorker] [WorkerThread-3] [Task:30-90] [VoidSink.cpp:37] [start] Setting up void sink: VoidSink[m
+[36m[10:46:50.138813] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:184] [start] Starting source with originId: 2[m
+[36m[10:46:50.140490] [D] [SingleNodeWorker] [WorkerThread-3] [Task:30-89] [BufferManager.cpp:65] [~BufferManager] Calling BufferManager::destroy()[m
+[36m[10:46:50.140513] [D] [SingleNodeWorker] [WorkerThread-3] [Task:30-89] [BufferManager.cpp:93] [~BufferManager] Shutting down Buffer Manager completed[m
+[31m[1m[10:46:50.140670] [E] [SingleNodeWorker] [WorkerThread-3] [] [Task.cpp:67] [callOnFailure] TaskCallback::callOnFailure[m
+[36m[10:46:50.140721] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:230] [tryStop] SourceThread 2: attempting to stop source[m
+[36m[10:46:50.140732] [D] [SingleNodeWorker] [WorkerThread-3] [] [SourceThread.cpp:238] [tryStop] SourceThread 2: source was not stopped during timeout[m
+[31m[1m[10:46:50.140903] [E] [SingleNodeWorker] [WorkerThread-3] [] [QueryEngine.cpp:874] [onFailure] Query Failed: cannot format malformed string value; Value '{"ID": 1000', is not a valid value of type: int.
+ in Query 30.[m
+[32m[10:46:50.141052] [I] [SingleNodeWorker] [WorkerThread-3] [] [SequenceShredder.cpp:55] [~SequenceShredder] Successfully validated SequenceShredder[m
