@@ -21,8 +21,8 @@ IMAGES=(
     nebulastream/nes-cli:maxim-popov-concat-varsized-materialization
 
     # varsized-copy (nebuli API)
-    nebulastream/worker:maxim-popov-baseline-varsized-memcpy
-    nebulastream/nebuli:maxim-popov-baseline-varsized-memcpy
+    nebulastream/worker:maxim-popov-nebuli-update
+    nebulastream/nebuli:maxim-popov-nebuli-update
     nebulastream/worker:maxim-popov-remove-memcpy-bench
     nebulastream/nebuli:maxim-popov-remove-memcpy-bench
 )
