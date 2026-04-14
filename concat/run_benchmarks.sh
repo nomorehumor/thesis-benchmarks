@@ -22,16 +22,29 @@ NUM_ITERATIONS=1
 declare -A SUITE_WORKER_IMAGE
 declare -A SUITE_CLI_IMAGE
 declare -A SUITE_STATUS_CLI_IMAGE
+declare -A SUITE_TOPOLOGY
 
 SUITE_WORKER_IMAGE[baseline]="nebulastream/worker:maxim-popov-master-baseline"
 SUITE_CLI_IMAGE[baseline]="nebulastream/nes-cli:maxim-popov-master-baseline"
 SUITE_STATUS_CLI_IMAGE[baseline]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
+SUITE_TOPOLOGY[baseline]="$SCRIPT_DIR/topology-csv.yaml"
 
 SUITE_WORKER_IMAGE[optimized]="nebulastream/worker:maxim-popov-concat-varsized-materialization"
 SUITE_CLI_IMAGE[optimized]="nebulastream/nes-cli:maxim-popov-concat-varsized-materialization"
 SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
+SUITE_TOPOLOGY[optimized]="$SCRIPT_DIR/topology-csv.yaml"
 
-ALL_SUITES=(baseline optimized)
+SUITE_WORKER_IMAGE[baseline-json]="nebulastream/worker:maxim-popov-master-baseline"
+SUITE_CLI_IMAGE[baseline-json]="nebulastream/nes-cli:maxim-popov-master-baseline"
+SUITE_STATUS_CLI_IMAGE[baseline-json]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
+SUITE_TOPOLOGY[baseline-json]="$SCRIPT_DIR/topology-json.yaml"
+
+SUITE_WORKER_IMAGE[optimized-json]="nebulastream/worker:maxim-popov-concat-varsized-materialization"
+SUITE_CLI_IMAGE[optimized-json]="nebulastream/nes-cli:maxim-popov-concat-varsized-materialization"
+SUITE_STATUS_CLI_IMAGE[optimized-json]="nebulastream/nes-cli:maxim-popov-lazy-parsing"
+SUITE_TOPOLOGY[optimized-json]="$SCRIPT_DIR/topology-json.yaml"
+
+ALL_SUITES=(baseline optimized baseline-json optimized-json)
 
 # =============================================================================
 # Helpers
@@ -93,9 +106,10 @@ kill_worker() {
 submit_query() {
     local suite="$1" query="$2" log_file="$3"
     local image="${SUITE_CLI_IMAGE[$suite]}"
+    local topology="${SUITE_TOPOLOGY[$suite]}"
 
     sudo docker run --network "$DOCKER_NETWORK" \
-        -v "$SCRIPT_DIR/topology.yaml:/work/topology.yaml:ro" \
+        -v "$topology:/work/topology.yaml:ro" \
         "$image" \
         -t /work/topology.yaml \
         -s "$WORKER_HOST" -d start "$query" 2>>"$log_file"
@@ -104,9 +118,10 @@ submit_query() {
 query_status() {
     local suite="$1" log_file="$2"
     local image="${SUITE_STATUS_CLI_IMAGE[$suite]}"
+    local topology="${SUITE_TOPOLOGY[$suite]}"
 
     sudo docker run --network "$DOCKER_NETWORK" \
-        -v "$SCRIPT_DIR/topology.yaml:/work/topology.yaml:ro" \
+        -v "$topology:/work/topology.yaml:ro" \
         "$image" \
         -t /work/topology.yaml \
         -s "$WORKER_HOST" status 2>>"$log_file"
