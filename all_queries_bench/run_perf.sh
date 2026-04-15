@@ -48,12 +48,15 @@ stop_perf() {
     if [ -n "$PERF_PID" ] && kill -0 "$PERF_PID" 2>/dev/null; then
         kill -INT "$PERF_PID"
         wait "$PERF_PID" 2>/dev/null || true
+        sleep 1
         log "Stopped perf recording"
     fi
 
     if [ -f "$data_file" ]; then
-        sudo perf report -i "$data_file" --stdio --no-children > "$report_file" 2>/dev/null || true
+        sudo perf report -i "$data_file" --stdio --no-children > "$report_file" 2>&1 || true
         log "Generated perf report: $report_file"
+    else
+        log "WARNING: perf data file not found: $data_file"
     fi
     PERF_PID=""
 }
