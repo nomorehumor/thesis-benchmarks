@@ -33,6 +33,29 @@ get_container_pid() {
     sudo docker inspect --format '{{.State.Pid}}' worker-max
 }
 
+start_worker() {
+    local threads="$1" buffer_size="$2"
+    sudo docker run --rm --network mynet --cpus 64 --name worker-max \
+        -v "/data/users/maxim/large:/work/large:ro" \
+        -d nebulastream/worker:maxim-popov-master-baseline \
+        "--worker.query_engine.number_of_worker_threads=$threads" \
+        "--worker.default_query_execution.operator_buffer_size=$buffer_size" \
+        "--worker.dump_compilation_result=/tmp/dump"
+}
+
+save_compilation_dump() {
+    local dest_dir="$1"
+    local newest
+    newest=$(sudo docker exec worker-max sh -c 'ls -td /tmp/dump/*/ 2>/dev/null | head -n1') || true
+    if [ -n "$newest" ]; then
+        mkdir -p "$dest_dir"
+        sudo docker cp "worker-max:$newest" "$dest_dir/" 2>/dev/null || true
+        log "Saved compilation dump from $newest to $dest_dir/"
+    else
+        log "WARNING: No compilation dump found in container /tmp/dump/"
+    fi
+}
+
 start_perf() {
     local pid="$1"
     local output_file="$2"
@@ -126,7 +149,7 @@ for threads in "${THREADS_NUMBERS[@]}"; do
                 perf_report="${PERF_RESULTS_DIR}/${threads}t_buf${buffer_size}_q${query_num}_${sanitized}_iter${iteration}.perf.report"
 
                 # Start worker (new worker per iteration)
-                worker_container_id=$(./start_worker.sh "$threads" "$buffer_size")
+                worker_container_id=$(start_worker "$threads" "$buffer_size")
                 log "Worker started with container ID: $worker_container_id"
                 sleep 2
 
@@ -143,6 +166,8 @@ for threads in "${THREADS_NUMBERS[@]}"; do
 
                 status=$(poll_query_status "$query_id")
                 log "Query $query_id completed with status: $status"
+
+                save_compilation_dump "${PERF_RESULTS_DIR}/${threads}t_buf${buffer_size}_q${query_num}_${sanitized}_iter${iteration}_compilation"
 
                 stop_perf "$perf_data" "$perf_report"
 
