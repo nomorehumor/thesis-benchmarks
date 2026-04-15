@@ -122,17 +122,18 @@ query_status() {
 
 start_perf() {
     local pid="$1" output_file="$2"
-    sudo perf record -g --call-graph dwarf -F "$PERF_FREQ" -p "$pid" -o "$output_file" &
-    PERF_PID=$!
-    log "Started perf recording (PID: $PERF_PID) -> $output_file"
+    PERF_RECORD_PID=$(sudo sh -c "perf record -g --call-graph dwarf -F $PERF_FREQ -p $pid -o '$output_file' & echo \$!")
+    log "Started perf recording (PID: $PERF_RECORD_PID) -> $output_file"
 }
 
 stop_perf() {
     local data_file="$1" report_file="$2"
 
-    if [[ -n "${PERF_PID:-}" ]] && kill -0 "$PERF_PID" 2>/dev/null; then
-        kill -INT "$PERF_PID"
-        wait "$PERF_PID" 2>/dev/null || true
+    if [[ -n "${PERF_RECORD_PID:-}" ]] && sudo kill -0 "$PERF_RECORD_PID" 2>/dev/null; then
+        sudo kill -INT "$PERF_RECORD_PID"
+        while sudo kill -0 "$PERF_RECORD_PID" 2>/dev/null; do
+            sleep 0.5
+        done
         sleep 1
         log "Stopped perf recording"
     fi
@@ -143,7 +144,7 @@ stop_perf() {
     else
         log "WARNING: perf data file not found: $data_file"
     fi
-    PERF_PID=""
+    PERF_RECORD_PID=""
 }
 
 # =============================================================================
