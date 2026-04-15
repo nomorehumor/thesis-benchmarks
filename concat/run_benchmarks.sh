@@ -7,7 +7,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Configuration
 # =============================================================================
 
-THREADS=(2 4 8 16 32 64)
+THREADS=(2 4 8 16 32 48 64)
 QUERIES_FILE="$SCRIPT_DIR/queries.txt"
 POLL_INTERVAL=2      # seconds between status checks
 TIMEOUT=600          # 10 minutes per query
