@@ -40,17 +40,19 @@ start_worker() {
         -d nebulastream/worker:maxim-popov-master-baseline \
         "--worker.query_engine.number_of_worker_threads=$threads" \
         "--worker.default_query_execution.operator_buffer_size=$buffer_size" \
-        "--worker.dump_compilation_result=/tmp/dump/compilation.ll"
+        "--worker.dump_compilation_result=FILE"
 }
 
 save_compilation_dump() {
-    local dest_file="$1"
-    mkdir -p "$(dirname "$dest_file")"
-    sudo docker cp "worker-max:/tmp/dump/compilation.ll" "$dest_file" 2>/dev/null || true
-    if [ -f "$dest_file" ]; then
-        log "Saved compilation dump to $dest_file"
+    local dest_dir="$1"
+    local newest
+    newest=$(sudo docker exec worker-max sh -c 'ls -td /tmp/dump/*/ 2>/dev/null | head -n1') || true
+    if [ -n "$newest" ]; then
+        mkdir -p "$dest_dir"
+        sudo docker cp "worker-max:$newest" "$dest_dir/" 2>/dev/null || true
+        log "Saved compilation dump from $newest to $dest_dir/"
     else
-        log "WARNING: No compilation dump found in container"
+        log "WARNING: No compilation dump found in container /tmp/dump/"
     fi
 }
 
@@ -165,7 +167,7 @@ for threads in "${THREADS_NUMBERS[@]}"; do
                 status=$(poll_query_status "$query_id")
                 log "Query $query_id completed with status: $status"
 
-                save_compilation_dump "${PERF_RESULTS_DIR}/${threads}t_buf${buffer_size}_q${query_num}_${sanitized}_iter${iteration}_compilation.ll"
+                save_compilation_dump "${PERF_RESULTS_DIR}/${threads}t_buf${buffer_size}_q${query_num}_${sanitized}_iter${iteration}_compilation"
 
                 stop_perf "$perf_data" "$perf_report"
 

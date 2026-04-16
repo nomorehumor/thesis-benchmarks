@@ -90,7 +90,7 @@ start_worker() {
         -d "$image" \
         "--worker.query_engine.number_of_worker_threads=$threads" \
         "--worker.default_query_execution.operator_buffer_size=$OPERATOR_BUFFER_SIZE" \
-        "--worker.dump_compilation_result=/tmp/dump/compilation.ll"
+        "--worker.dump_compilation_result=FILE"
 }
 
 kill_worker() {
@@ -103,13 +103,15 @@ get_container_pid() {
 }
 
 save_compilation_dump() {
-    local dest_file="$1"
-    mkdir -p "$(dirname "$dest_file")"
-    sudo docker cp "$WORKER_NAME:/tmp/dump/compilation.ll" "$dest_file" 2>/dev/null || true
-    if [[ -f "$dest_file" ]]; then
-        log "Saved compilation dump to $dest_file"
+    local dest_dir="$1"
+    local newest
+    newest=$(sudo docker exec "$WORKER_NAME" sh -c 'ls -td /tmp/dump/*/ 2>/dev/null | head -n1') || true
+    if [[ -n "$newest" ]]; then
+        mkdir -p "$dest_dir"
+        sudo docker cp "$WORKER_NAME:$newest" "$dest_dir/" 2>/dev/null || true
+        log "Saved compilation dump from $newest to $dest_dir/"
     else
-        log "WARNING: No compilation dump found in container"
+        log "WARNING: No compilation dump found in container /tmp/dump/"
     fi
 }
 
@@ -270,7 +272,7 @@ run_suite() {
                 status=$(poll_query_status "$suite" "$query_id" "$cli_log")
                 log "[$suite] Query $query_id completed: $status"
 
-                save_compilation_dump "${perf_dir}/${tag}_compilation.ll"
+                save_compilation_dump "${perf_dir}/${tag}_compilation"
 
                 stop_perf "$perf_data" "$perf_report"
             done
