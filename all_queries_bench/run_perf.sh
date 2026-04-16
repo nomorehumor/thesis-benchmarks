@@ -40,26 +40,24 @@ start_worker() {
         -d nebulastream/worker:maxim-popov-master-baseline \
         "--worker.query_engine.number_of_worker_threads=$threads" \
         "--worker.default_query_execution.operator_buffer_size=$buffer_size" \
-        "--worker.dump_compilation_result=/tmp/dump"
+        "--worker.dump_compilation_result=/tmp/dump/compilation.ll"
 }
 
 save_compilation_dump() {
-    local dest_dir="$1"
-    local newest
-    newest=$(sudo docker exec worker-max sh -c 'ls -td /tmp/dump/*/ 2>/dev/null | head -n1') || true
-    if [ -n "$newest" ]; then
-        mkdir -p "$dest_dir"
-        sudo docker cp "worker-max:$newest" "$dest_dir/" 2>/dev/null || true
-        log "Saved compilation dump from $newest to $dest_dir/"
+    local dest_file="$1"
+    mkdir -p "$(dirname "$dest_file")"
+    sudo docker cp "worker-max:/tmp/dump/compilation.ll" "$dest_file" 2>/dev/null || true
+    if [ -f "$dest_file" ]; then
+        log "Saved compilation dump to $dest_file"
     else
-        log "WARNING: No compilation dump found in container /tmp/dump/"
+        log "WARNING: No compilation dump found in container"
     fi
 }
 
 start_perf() {
     local pid="$1"
     local output_file="$2"
-    PERF_RECORD_PID=$(sudo sh -c "perf record -g --call-graph dwarf -F 99 -p $pid -o '$output_file' & echo \$!")
+    PERF_RECORD_PID=$(sudo sh -c "perf record -F 99 -p $pid -o '$output_file' & echo \$!")
     log "Started perf recording (PID: $PERF_RECORD_PID) -> $output_file"
 }
 
@@ -167,7 +165,7 @@ for threads in "${THREADS_NUMBERS[@]}"; do
                 status=$(poll_query_status "$query_id")
                 log "Query $query_id completed with status: $status"
 
-                save_compilation_dump "${PERF_RESULTS_DIR}/${threads}t_buf${buffer_size}_q${query_num}_${sanitized}_iter${iteration}_compilation"
+                save_compilation_dump "${PERF_RESULTS_DIR}/${threads}t_buf${buffer_size}_q${query_num}_${sanitized}_iter${iteration}_compilation.ll"
 
                 stop_perf "$perf_data" "$perf_report"
 
