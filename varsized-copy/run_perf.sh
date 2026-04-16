@@ -136,7 +136,7 @@ query_status() {
 
 start_perf() {
     local pid="$1" output_file="$2"
-    PERF_RECORD_PID=$(sudo sh -c "perf record -F $PERF_FREQ -p $pid -o '$output_file' & echo \$!")
+    PERF_RECORD_PID=$(sudo sh -c "perf record -F $PERF_FREQ -p $pid -o '$output_file' </dev/null >/dev/null 2>&1 & echo \$!")
     log "Started perf recording (PID: $PERF_RECORD_PID) -> $output_file"
 }
 

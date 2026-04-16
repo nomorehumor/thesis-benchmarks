@@ -59,7 +59,7 @@ save_compilation_dump() {
 start_perf() {
     local pid="$1"
     local output_file="$2"
-    PERF_RECORD_PID=$(sudo sh -c "perf record -F 99 -p $pid -o '$output_file' & echo \$!")
+    PERF_RECORD_PID=$(sudo sh -c "perf record -F 99 -p $pid -o '$output_file' </dev/null >/dev/null 2>&1 & echo \$!")
     log "Started perf recording (PID: $PERF_RECORD_PID) -> $output_file"
 }
 
