@@ -1,17 +1,17 @@
-query: SELECT extra FROM PERSON INTO EXTRA_SINK
+query: SELECT EXTRA FROM PERSON INTO EXTRA_SINK
 
 sinks:
   - name: NAME_SINK 
     host: worker-max:8080
     schema:
-      - name: PERSON$name
+      - name: PERSON$NAME
         type: VARSIZED
     type: Void
     config: { }
-  - name: PERSON_ID_SINK 
+  - name: PERSON_ID_SINK
     host: worker-max:8080
     schema:
-      - name: PERSON$id
+      - name: PERSON$ID
         type: INT32
     type: Void
     config: { }
@@ -32,19 +32,19 @@ sinks:
   - name: PERSON_SINK 
     host: worker-max:8080
     schema:
-      - name: PERSON$id
+      - name: PERSON$ID
         type: INT32
-      - name: PERSON$name
+      - name: PERSON$NAME
         type: VARSIZED
-      - name: PERSON$email_address
+      - name: PERSON$EMAIL_ADDRESS
         type: VARSIZED
-      - name: PERSON$credit_card
+      - name: PERSON$CREDIT_CARD
         type: VARSIZED
-      - name: PERSON$city
+      - name: PERSON$CITY
         type: VARSIZED
-      - name: PERSON$state
+      - name: PERSON$STATE
         type: VARSIZED
-      - name: PERSON$timestamp
+      - name: PERSON$TIMESTAMP
         type: UINT64
       - name: PERSON$EXTRA
         type: VARSIZED
@@ -54,49 +54,49 @@ sinks:
 logical:
   - name: BID
     schema:
-      - name: timestamp
+      - name: TIMESTAMP
         type: UINT64
       - name: AUCTIONID
         type: INT32
-      - name: bidder
+      - name: BIDDER
         type: INT32
-      - name: price
+      - name: PRICE
         type: FLOAT64
 
   - name: PERSON
     schema:
-      - name: id
+      - name: ID
         type: INT32
-      - name: name
+      - name: NAME
         type: VARSIZED
-      - name: email_address
+      - name: EMAIL_ADDRESS
         type: VARSIZED
-      - name: credit_card
+      - name: CREDIT_CARD
         type: VARSIZED
-      - name: city
+      - name: CITY
         type: VARSIZED
-      - name: state
+      - name: STATE
         type: VARSIZED
-      - name: timestamp
+      - name: TIMESTAMP
         type: UINT64
       - name: EXTRA
         type: VARSIZED
 
   - name: AUCTION
     schema:
-      - name: timestamp
+      - name: TIMESTAMP
         type: UINT64
-      - name: id
+      - name: ID
         type: INT32
-      - name: initialBID
+      - name: INITIALBID
         type: INT32
-      - name: reserve
+      - name: RESERVE
         type: INT32
-      - name: expires
+      - name: EXPIRES
         type: UINT64
-      - name: seller
+      - name: SELLER
         type: INT32
-      - name: category
+      - name: CATEGORY
         type: INT32
 
 physical:
@@ -105,7 +105,6 @@ physical:
     type: File
     parser_config:
       type: JSON
-      fieldDelimiter: ","
     source_config:
       file_path: "/work/large/nexmark-json/bid_6GB.json"
 
@@ -114,7 +113,6 @@ physical:
     type: File
     parser_config:
       type: JSON
-      fieldDelimiter: ","
     source_config:
       file_path: "/work/large/nexmark-json/auction_707MB.json"
 
@@ -123,6 +121,5 @@ physical:
     type: File
     parser_config:
       type: JSON
-      fieldDelimiter: ","
     source_config:
       file_path: "/work/large/nexmark-json/person_840MB.json"

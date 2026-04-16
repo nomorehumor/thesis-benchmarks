@@ -1,21 +1,21 @@
-query: SELECT ID FROM PERSON WHERE city == VARSIZED("redmond") AND state == VARSIZED("wy") INTO PERSON_ID_SINK
+query: SELECT ID FROM PERSON WHERE CITY == VARSIZED("redmond") AND STATE == VARSIZED("wy") INTO PERSON_ID_SINK
 
 sinks:
-  - name: NAME_SINK 
+  - name: NAME_SINK
     host: worker-max:8080
     schema:
-      - name: PERSON$name
+      - name: PERSON$NAME
         type: VARSIZED
     type: Void
     config: { }
-  - name: PERSON_ID_SINK 
+  - name: PERSON_ID_SINK
     host: worker-max:8080
     schema:
       - name: PERSON$ID
         type: INT32
     type: Void
     config: { }
-  - name: BID_AUCTION_ID_SINK 
+  - name: BID_AUCTION_ID_SINK
     host: worker-max:8080
     schema:
       - name: BID$AUCTIONID
@@ -25,11 +25,11 @@ sinks:
   - name: EXTRA_SINK
     host: worker-max:8080
     schema:
-      - name: PERSON$extra
+      - name: PERSON$EXTRA
         type: VARSIZED
     type: Void
     config: { }
-  - name: PERSON_SINK 
+  - name: PERSON_SINK
     host: worker-max:8080
     schema:
       - name: PERSON$ID
@@ -38,7 +38,7 @@ sinks:
         type: VARSIZED
       - name: PERSON$EMAIL_ADDRESS
         type: VARSIZED
-      - name: PERSON$credit_card
+      - name: PERSON$CREDIT_CARD
         type: VARSIZED
       - name: PERSON$CITY
         type: VARSIZED
@@ -54,13 +54,13 @@ sinks:
 logical:
   - name: BID
     schema:
-      - name: timestamp
+      - name: TIMESTAMP
         type: UINT64
       - name: AUCTIONID
         type: INT32
-      - name: bidder
+      - name: BIDDER
         type: INT32
-      - name: price
+      - name: PRICE
         type: FLOAT64
 
   - name: PERSON
@@ -84,19 +84,19 @@ logical:
 
   - name: AUCTION
     schema:
-      - name: timestamp
+      - name: TIMESTAMP
         type: UINT64
-      - name: id
+      - name: ID
         type: INT32
-      - name: initialBID
+      - name: INITIALBID
         type: INT32
-      - name: reserve
+      - name: RESERVE
         type: INT32
-      - name: expires
+      - name: EXPIRES
         type: UINT64
-      - name: seller
+      - name: SELLER
         type: INT32
-      - name: category
+      - name: CATEGORY
         type: INT32
 
 physical:
@@ -105,7 +105,6 @@ physical:
     type: File
     parser_config:
       type: JSON
-      fieldDelimiter: ","
     source_config:
       file_path: "/work/large/nexmark-json/bid_6GB.json"
 
@@ -114,7 +113,6 @@ physical:
     type: File
     parser_config:
       type: JSON
-      fieldDelimiter: ","
     source_config:
       file_path: "/work/large/nexmark-json/auction_707MB.json"
 
@@ -123,6 +121,5 @@ physical:
     type: File
     parser_config:
       type: JSON
-      fieldDelimiter: ","
     source_config:
       file_path: "/work/large/nexmark-json/person_840MB.json"

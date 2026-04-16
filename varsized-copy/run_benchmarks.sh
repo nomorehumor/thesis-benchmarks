@@ -28,7 +28,7 @@ SUITE_QUERIES_DIR[baseline]="$SCRIPT_DIR/queries"
 
 SUITE_WORKER_IMAGE[optimized]="nebulastream/worker:maxim-popov-remove-memcpy-bench"
 SUITE_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
-SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
+SUITE_STATUS_CLI_IMAGE[optimized]="nebulastream/nebuli:maxim-popov-nebuli-update"
 SUITE_QUERIES_DIR[optimized]="$SCRIPT_DIR/queries"
 
 SUITE_WORKER_IMAGE[baseline-json]="nebulastream/worker:maxim-popov-nebuli-update"
@@ -38,7 +38,7 @@ SUITE_QUERIES_DIR[baseline-json]="$SCRIPT_DIR/queries-json"
 
 SUITE_WORKER_IMAGE[optimized-json]="nebulastream/worker:maxim-popov-remove-memcpy-bench"
 SUITE_CLI_IMAGE[optimized-json]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
-SUITE_STATUS_CLI_IMAGE[optimized-json]="nebulastream/nebuli:maxim-popov-remove-memcpy-bench"
+SUITE_STATUS_CLI_IMAGE[optimized-json]="nebulastream/nebuli:maxim-popov-nebuli-update"
 SUITE_QUERIES_DIR[optimized-json]="$SCRIPT_DIR/queries-json"
 
 ALL_SUITES=(baseline optimized baseline-json optimized-json)
