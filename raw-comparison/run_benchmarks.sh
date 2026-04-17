@@ -16,7 +16,7 @@ WORKER_NAME="worker-max"
 WORKER_HOST="$WORKER_NAME:8080"
 DATA_VOLUME="/data/users/maxim/large:/work/large:ro"
 OPERATOR_BUFFER_SIZE=262144
-NUM_ITERATIONS=1
+NUM_ITERATIONS=10
 
 # Suite definitions: VARIANT x FORMAT
 # Each suite is defined by: worker_image, cli_image, status_cli_image, extra_worker_volumes, topology_file
