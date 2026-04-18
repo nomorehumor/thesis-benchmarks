@@ -7,7 +7,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Configuration (mirrors run_benchmarks.sh)
 # =============================================================================
 
-THREADS=(2 4 8 16 32 48 64)
+THREADS=(1)
 DOCKER_NETWORK="mynet"
 WORKER_NAME="worker-max"
 WORKER_HOST="$WORKER_NAME:8080"
