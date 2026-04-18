@@ -1,4 +1,4 @@
-query: SELECT CREDIT_CARD FROM PERSON INTO EXTRA_SINK
+query: SELECT CREDIT_CARD FROM PERSON INTO CREDIT_CARD_SINK
 
 sinks:
   - name: NAME_SINK 
@@ -26,6 +26,13 @@ sinks:
     host: worker-max:8080
     schema:
       - name: PERSON$EXTRA
+        type: VARSIZED
+    type: Void
+    config: { }
+  - name: CREDIT_CARD_SINK
+    host: worker-max:8080
+    schema:
+      - name: PERSON$CREDIT_CARD
         type: VARSIZED
     type: Void
     config: { }
@@ -71,7 +78,7 @@ logical:
         type: VARSIZED
       - name: email_address
         type: VARSIZED
-      - name: credit_card
+      - name: CREDIT_CARD
         type: VARSIZED
       - name: city
         type: VARSIZED

@@ -27,8 +27,6 @@ BENCHMARK_RUNS=(
     "lazy-parsing/run_benchmarks.sh:optimized:lazy-parsing/optimized"
     "lazy-parsing/run_benchmarks.sh:baseline-json:lazy-parsing/baseline-json"
     "lazy-parsing/run_benchmarks.sh:optimized-json:lazy-parsing/optimized-json"
-
-    "all_queries_bench/run_benchmark.sh::all_queries_bench"
 )
 
 PERF_RUNS=(
@@ -51,8 +49,6 @@ PERF_RUNS=(
     "lazy-parsing/run_perf.sh:optimized:lazy-parsing/optimized"
     "lazy-parsing/run_perf.sh:baseline-json:lazy-parsing/baseline-json"
     "lazy-parsing/run_perf.sh:optimized-json:lazy-parsing/optimized-json"
-
-    "all_queries_bench/run_perf.sh::all_queries_bench"
 )
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
@@ -108,10 +104,10 @@ run_list() {
     done
 }
 
-log "########################################"
-log "# Phase 1: Benchmarks"
-log "########################################"
-run_list "BENCH" "${BENCHMARK_RUNS[@]}"
+#log "########################################"
+#log "# Phase 1: Benchmarks"
+#log "########################################"
+#run_list "BENCH" "${BENCHMARK_RUNS[@]}"
 
 log "########################################"
 log "# Phase 2: Perf profiling"
