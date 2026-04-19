@@ -1,41 +1,55 @@
 #!/bin/bash
 # Generate SVG flamegraphs from .perf.report files produced by run_perf.sh.
 #
-# Those reports contain folded stacks inline (produced by
-# `perf report --call-graph folded,...`). This script extracts them,
-# converts the "<pct>% stack;stack;..." lines to flamegraph.pl's
-# "stack;stack;... <count>" format, and renders an SVG next to each report.
+# This script recursively scans a results root for .perf.report files,
+# converts them to flamegraph.pl input format, and writes an SVG next
+# to each report.
 #
 # Usage:
-#   ./generate_flamegraphs.sh [RESULTS_DIR]
+#   ./generate_flamegraphs.sh [RESULTS_ROOT]
 #
 # Defaults:
-#   RESULTS_DIR = varsized-copy/perf_results (relative to this script)
-#   FlameGraph  = ./FlameGraph (relative to this script)
+#   RESULTS_ROOT = script directory
+#   FlameGraph   = ./FlameGraph (relative to this script)
+#
+# Example directory layout:
+#   benchmark-a/perf_results/*.perf.report
+#   benchmark-b/perf_results/*.perf.report
+#   benchmark-c/some/subdir/*.perf.report
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-RESULTS_DIR="${1:-$SCRIPT_DIR/varsized-copy/perf_results}"
+RESULTS_ROOT="${1:-$SCRIPT_DIR}"
 FLAMEGRAPH_DIR="${FLAMEGRAPH_DIR:-$SCRIPT_DIR/FlameGraph}"
 FLAMEGRAPH_PL="$FLAMEGRAPH_DIR/flamegraph.pl"
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 
-[[ -d "$RESULTS_DIR"  ]] || { echo "ERROR: results dir not found: $RESULTS_DIR" >&2; exit 1; }
+[[ -d "$RESULTS_ROOT" ]] || { echo "ERROR: results root not found: $RESULTS_ROOT" >&2; exit 1; }
 [[ -x "$FLAMEGRAPH_PL" ]] || { echo "ERROR: flamegraph.pl not found/executable at $FLAMEGRAPH_PL" >&2; exit 1; }
+command -v tqdm >/dev/null 2>&1 || { echo "ERROR: tqdm not found in PATH" >&2; exit 1; }
 
-log "Results dir: $RESULTS_DIR"
+log "Results root: $RESULTS_ROOT"
 log "flamegraph.pl: $FLAMEGRAPH_PL"
 
 ok=0
 fail=0
 
-# Find all .perf.report files
+tmp_reports="$(mktemp)"
+trap 'rm -f "$tmp_reports"' EXIT
+
+find "$RESULTS_ROOT" \
+    -path "$FLAMEGRAPH_DIR" -prune -o \
+    -type f -name '*.perf.report' -print0 | sort -z > "$tmp_reports"
+
+total=$(tr -cd '\0' < "$tmp_reports" | wc -c | awk '{print $1}')
+
+# Find all .perf.report files under all benchmark directories.
 while IFS= read -r -d '' report; do
     svg="${report%.perf.report}.svg"
-    tag="${report#"$RESULTS_DIR/"}"
+    tag="${report#"$RESULTS_ROOT"/}"
 
     if [[ -s "$svg" ]]; then
         log "REGEN (overwriting): $tag"
@@ -43,31 +57,13 @@ while IFS= read -r -d '' report; do
         log "NEW: $tag"
     fi
 
-    # Extract stack data from the report.
-    #
-    # Two formats exist:
-    #   1. Folded lines (from `perf report --call-graph folded,...`):
-    #        "<pct>% frame1;frame2;...;frameN"  (callee-first)
-    #      These give us full call-stack hierarchy. We reverse the ';'-joined
-    #      frames because flamegraph.pl expects root-first.
-    #
-    #   2. Traditional flat rows (from plain `perf report --stdio`):
-    #        "     <pct>%  <command>  <dso>  [.|k] <symbol>"
-    #      No hierarchy. We emit each as a 1-deep stack "<symbol> <count>".
-    #
-    # Folded is preferred when present; otherwise we fall back to flat rows.
-    # flamegraph.pl expects an integer "count"; multiplying percentages by
-    # 1000 keeps two decimals of precision ("permille").
     folded=$(awk '
-        # Folded line: starts with a digit, no leading whitespace, contains
-        # ";"-joined stack.
         /^[0-9]+(\.[0-9]+)?%[[:space:]]/ {
             pct = $1
             sub(/%$/, "", pct)
             stack = $0
             sub(/^[0-9.]+%[[:space:]]+/, "", stack)
 
-            # Reverse callee-first -> root-first.
             n = split(stack, frames, ";")
             reversed = frames[n]
             for (i = n - 1; i >= 1; i--) reversed = reversed ";" frames[i]
@@ -79,13 +75,10 @@ while IFS= read -r -d '' report; do
     ' "$report")
 
     if [[ -z "$folded" ]]; then
-        # Fallback: flat rows. Example:
-        #   "     3.43%  WorkerThread-12  nes-single-node-worker  [.] std::char_traits::find"
         folded=$(awk '
             /^[[:space:]]+[0-9]+(\.[0-9]+)?%[[:space:]]+[^[:space:]]+[[:space:]]+[^[:space:]]+[[:space:]]+\[[.k]\][[:space:]]/ {
                 pct = $1
                 sub(/%$/, "", pct)
-                # Everything after "[.] " or "[k] " is the symbol (may contain spaces).
                 line = $0
                 sub(/^.*[[:space:]]\[[.k]\][[:space:]]+/, "", line)
                 if (line == "") next
@@ -115,7 +108,9 @@ while IFS= read -r -d '' report; do
         rm -f "$svg"
         fail=$((fail + 1))
     fi
-done < <(find "$RESULTS_DIR" -type f -name '*.perf.report' -print0 | sort -z)
+done < <(
+    cat "$tmp_reports" | tqdm --total "$total" --unit files --desc "Flamegraphs"
+)
 
 log "========================================="
 log "Done. ok=$ok  fail=$fail"

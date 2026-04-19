@@ -160,7 +160,7 @@ query_status() {
 
 start_perf() {
     local pid="$1" output_file="$2"
-    PERF_RECORD_PID=$(sudo sh -c "perf record -F $PERF_FREQ -p $pid -o '$output_file' </dev/null >/dev/null 2>&1 & echo \$!")
+    PERF_RECORD_PID=$(sudo sh -c "perf record --call-graph fp --sample-cpu -g -F $PERF_FREQ -p $pid -o '$output_file' </dev/null >/dev/null 2>&1 & echo \$!")
     log "Started perf recording (PID: $PERF_RECORD_PID) -> $output_file"
 }
 
@@ -184,7 +184,7 @@ stop_perf() {
         sudo perf script -i "$data_file" > "$script_file" 2>/dev/null || true
         log "Generated perf script: $script_file"
 
-        sudo perf report -i "$data_file" --stdio --no-children > "$report_file" 2>&1 || true
+        sudo perf report -i "$data_file" --stdio --no-children --call-graph folded,0,callee,function > "$report_file" 2>&1 || true
         log "Generated perf report: $report_file"
         archive_perf_data "$data_file"
     else
