@@ -1,15 +1,17 @@
 #!/bin/bash
 
-set -e
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Default configuration
 #THREADS_NUMBERS=(2 4 8 16 32 64)
 THREADS_NUMBERS=(4 8 16 32 64)
 BUFFER_SIZES=(1048576 2097152 4194304 8388608)
-QUERIES_FILE="queries.txt"
+FORMATS=(csv json)
+QUERIES_FILE="$SCRIPT_DIR/queries.txt"
 TIMESTAMP=$(date +%s)
-RESULTS_FILE="results_${TIMESTAMP}.json"
+RESULTS_FILE="$SCRIPT_DIR/results_${TIMESTAMP}.json"
 POLL_INTERVAL=2  # seconds
+POLL_TIMEOUT=600 # seconds per query
 NUM_ITERATIONS=1
 
 # Parse arguments
@@ -33,25 +35,30 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"
 }
 
+topology_for_format() {
+    echo "$SCRIPT_DIR/topology-$1.yaml"
+}
+
 # Function to add result to JSON file
 add_result() {
     local query_text="$1"
     local query_id="$2"
     local threads="$3"
     local buffer_size="$4"
-    local status="$5"
-    local started="$6"
-    local stopped="$7"
-    local error="${8:-}"
+    local format="$5"
+    local status="$6"
+    local started="$7"
+    local stopped="$8"
+    local error="${9:-}"
 
-    # Create temporary file with new entry
-    local temp_file=$(mktemp)
+    local temp_file
+    temp_file=$(mktemp)
 
-    # Read current results, add new entry, write back
     jq --arg query "$query_text" \
        --arg qid "$query_id" \
        --arg threads "$threads" \
        --arg buffer_size "$buffer_size" \
+       --arg format "$format" \
        --arg status "$status" \
        --arg started "$started" \
        --arg stopped "$stopped" \
@@ -61,6 +68,7 @@ add_result() {
            query_id: $qid,
            threads_number: ($threads | tonumber),
            buffer_size: ($buffer_size | tonumber),
+           format: $format,
            status: $status,
            started: $started,
            stopped: $stopped,
@@ -73,106 +81,132 @@ add_result() {
 # Function to poll query status
 poll_query_status() {
     local query_id="$1"
-    local timeout=300
+    local topology="$2"
     local elapsed=0
 
-    log "Polling status for query $query_id (timeout: ${timeout}s)..." >&2
+    log "Polling status for query $query_id (timeout: ${POLL_TIMEOUT}s)..." >&2
 
-    while [ "$elapsed" -lt "$timeout" ]; do
-        # Get query status
-        local status_output=$(./query_status.sh)
+    while [ "$elapsed" -lt "$POLL_TIMEOUT" ]; do
+        local status_output
+        if ! status_output=$("$SCRIPT_DIR/query_status.sh" "$topology" 2>/dev/null); then
+            log "query_status.sh failed, retrying..." >&2
+            sleep "$POLL_INTERVAL"
+            elapsed=$((elapsed + POLL_INTERVAL))
+            continue
+        fi
 
-        # Check if our query_id exists and has stopped
-        local query_info=$(echo "$status_output" | jq ".[] | select(.local_query_id == $query_id)")
+        local query_info
+        query_info=$(echo "$status_output" | jq ".[] | select(.local_query_id == $query_id)" 2>/dev/null)
 
         if [ -z "$query_info" ]; then
             log "Query $query_id not found in status, waiting..." >&2
             sleep "$POLL_INTERVAL"
+            elapsed=$((elapsed + POLL_INTERVAL))
             continue
         fi
 
-        # Check if stopped field exists (not null and not empty)
-        local stopped=$(echo "$query_info" | jq -r '.stopped')
+        local stopped
+        stopped=$(echo "$query_info" | jq -r '.stopped')
 
         if [ "$stopped" != "null" ] && [ -n "$stopped" ]; then
             log "Query $query_id has stopped" >&2
 
-            # Extract all necessary fields
-            local status=$(echo "$query_info" | jq -r '.query_status')
-            local started=$(echo "$query_info" | jq -r '.started.formatted')
-            local stopped_time=$(echo "$query_info" | jq -r '.stopped.formatted')
-            local error=$(echo "$query_info" | jq -r '.error // ""')
+            local status started stopped_time error
+            status=$(echo "$query_info" | jq -r '.query_status')
+            started=$(echo "$query_info" | jq -r '.started.formatted')
+            stopped_time=$(echo "$query_info" | jq -r '.stopped.formatted')
+            error=$(echo "$query_info" | jq -r '.error // ""')
 
             echo "$status|$started|$stopped_time|$error"
             return 0
         fi
 
-        log "Query $query_id still running, waiting..." >&2
+        log "Query $query_id still running, waiting... (${elapsed}s)" >&2
         sleep "$POLL_INTERVAL"
         elapsed=$((elapsed + POLL_INTERVAL))
     done
 
-    log "Query $query_id timed out after ${timeout}s" >&2
-    echo "TIMEOUT|||Timed out after ${timeout}s"
+    log "Query $query_id timed out after ${POLL_TIMEOUT}s" >&2
+    echo "TIMEOUT|||Timed out after ${POLL_TIMEOUT}s"
     return 0
 }
 
 # Main benchmark loop
 log "Starting benchmark with timestamp: $TIMESTAMP"
 log "Number of iterations per query: $NUM_ITERATIONS"
+log "Formats: ${FORMATS[*]}"
 
 # Kill any existing worker before starting
 log "Killing any existing worker..."
-./kill_worker.sh || true
+"$SCRIPT_DIR/kill_worker.sh" || true
 
-# Log queries file
 log "Queries file: $QUERIES_FILE"
 
-for threads in "${THREADS_NUMBERS[@]}"; do
-    for buffer_size in "${BUFFER_SIZES[@]}"; do
-        log "========================================="
-        log "Starting benchmark with $threads threads, buffer size $buffer_size"
-        log "========================================="
+for format in "${FORMATS[@]}"; do
+    topology=$(topology_for_format "$format")
 
-        # Process each query
-        while IFS= read -r query || [ -n "$query" ]; do
-            # Skip blank lines
-            [ -z "$query" ] && continue
+    if [ ! -f "$topology" ]; then
+        log "Topology file not found for format $format: $topology — skipping"
+        continue
+    fi
 
-            # Run each query N times
-            for iteration in $(seq 1 $NUM_ITERATIONS); do
-                # Start worker
-                worker_container_id=$(./start_worker.sh "$threads" "$buffer_size")
-                log "Worker started with container ID: $worker_container_id"
+    log "#########################################"
+    log "Format: $format (topology: $topology)"
+    log "#########################################"
 
-                log "Submitting query: $query (iteration $iteration/$NUM_ITERATIONS)"
+    for threads in "${THREADS_NUMBERS[@]}"; do
+        for buffer_size in "${BUFFER_SIZES[@]}"; do
+            log "========================================="
+            log "[$format] $threads threads, buffer $buffer_size"
+            log "========================================="
 
-                # Submit query and capture output
-                submit_output=$(./submit_query.sh "$query")
-                query_id=$(echo "$submit_output" | tail -n 1)
+            while IFS= read -r query || [ -n "$query" ]; do
+                [ -z "$query" ] && continue
 
-                log "Query submitted with ID: $query_id"
+                for iteration in $(seq 1 "$NUM_ITERATIONS"); do
+                    worker_container_id=$("$SCRIPT_DIR/start_worker.sh" "$threads" "$buffer_size") || worker_container_id=""
+                    log "Worker started with container ID: $worker_container_id"
 
-                # Poll for query completion
-                result=$(poll_query_status "$query_id")
+                    log "[$format] Submitting query: $query (iteration $iteration/$NUM_ITERATIONS)"
 
-                # Parse result
-                IFS='|' read -r status started stopped error <<< "$result"
+                    local_status=""
+                    local_started=""
+                    local_stopped=""
+                    local_error=""
+                    query_id=""
 
-                log "Query $query_id completed with status: $status"
+                    if submit_output=$("$SCRIPT_DIR/submit_query.sh" "$query" "$topology" 2>&1); then
+                        query_id=$(echo "$submit_output" | tail -n 1)
+                    else
+                        submit_output="${submit_output:-submit_query.sh failed}"
+                        query_id=""
+                    fi
 
-                # Store result
-                add_result "$query" "$query_id" "$threads" "$buffer_size" "$status" "$started" "$stopped" "$error"
+                    if [[ "$query_id" =~ ^[0-9]+$ ]]; then
+                        log "Query submitted with ID: $query_id"
+                        result=$(poll_query_status "$query_id" "$topology")
+                        IFS='|' read -r local_status local_started local_stopped local_error <<< "$result"
+                        log "Query $query_id completed with status: $local_status"
+                    else
+                        log "Query submission failed, marking as Failed"
+                        local_status="Failed"
+                        local_error=$(echo "$submit_output" | tr '\n' ' ' | head -c 1000)
+                    fi
 
-                # Kill worker
-                log "Killing worker..."
-                ./kill_worker.sh || true
-            done
+                    add_result "$query" "$query_id" "$threads" "$buffer_size" "$format" \
+                               "$local_status" "$local_started" "$local_stopped" "$local_error"
 
-        done < "$QUERIES_FILE"
+                    log "Killing worker..."
+                    "$SCRIPT_DIR/kill_worker.sh" || true
+                done
 
-        log "Completed benchmark for $threads threads, buffer size $buffer_size"
+            done < "$QUERIES_FILE"
+
+            log "[$format] Completed $threads threads, buffer $buffer_size"
+        done
     done
+
+    log "[$format] Completed all iterations"
 done
 
 log "========================================="
@@ -180,6 +214,5 @@ log "Benchmark complete!"
 log "Results saved to: $RESULTS_FILE"
 log "========================================="
 
-# Pretty print final results summary
 log "Summary:"
-jq -r '.[] | "Query ID: \(.query_id) | Threads: \(.threads_number) | Buffer: \(.buffer_size) | Status: \(.status)"' "$RESULTS_FILE"
+jq -r '.[] | "Query ID: \(.query_id) | Format: \(.format) | Threads: \(.threads_number) | Buffer: \(.buffer_size) | Status: \(.status)"' "$RESULTS_FILE"
