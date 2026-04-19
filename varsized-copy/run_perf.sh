@@ -85,7 +85,7 @@ start_worker() {
         "--grpc=$WORKER_HOST" \
         "--worker.query_engine.number_of_worker_threads=$threads" \
         "--worker.default_query_execution.operator_buffer_size=$OPERATOR_BUFFER_SIZE" \
-        "--worker.dump_compilation_result=FILE"
+        "--worker.dump_compilation_result=FILE" 
 }
 
 kill_worker() {
@@ -129,14 +129,14 @@ query_status() {
         -v "$SCRIPT_DIR/topology.yaml:/work/topology.yaml:ro" \
         -v "$SCRIPT_DIR/queries:/work/queries:ro" \
         "$image" \
-        -s "$WORKER_HOST" status "$query_id" 2>>"$log_file"
+        -s "$WORKER_HOST" status "$query_id" 
 }
 
 # --- Perf helpers ------------------------------------------------------------
 
 start_perf() {
     local pid="$1" output_file="$2"
-    PERF_RECORD_PID=$(sudo sh -c "perf record -g --call-graph dwarf -F $PERF_FREQ -p $pid -o '$output_file' </dev/null >/dev/null 2>&1 & echo \$!")
+    PERF_RECORD_PID=$(sudo sh -c "perf record --call-graph fp --sample-cpu -g -F $PERF_FREQ -p $pid -o '$output_file' </dev/null >/dev/null 2>&1 & echo \$!")
     log "Started perf recording (PID: $PERF_RECORD_PID) -> $output_file"
 }
 
@@ -153,7 +153,7 @@ stop_perf() {
     fi
 
     if [[ -f "$data_file" ]]; then
-        sudo perf report -i "$data_file" --stdio --no-children > "$report_file" 2>&1 || true
+        sudo perf report -i "$data_file" --stdio --no-children --call-graph folded,0,callee,function > "$report_file" 2>&1 || true
         log "Generated perf report: $report_file"
     else
         log "WARNING: perf data file not found: $data_file"
