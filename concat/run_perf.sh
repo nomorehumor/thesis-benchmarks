@@ -7,7 +7,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Configuration (mirrors run_benchmarks.sh)
 # =============================================================================
 
-THREADS=(2 4 8 16 32 48 64)
+THREADS=(1)
 QUERIES_FILE="$SCRIPT_DIR/queries.txt"
 POLL_INTERVAL=2
 TIMEOUT=600
