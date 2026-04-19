@@ -163,12 +163,48 @@ stop_perf() {
     fi
 
     if [[ -f "$data_file" ]]; then
+        # Canonical text dump of every sample (input for stackcollapse-perf.pl
+        # and the standard FlameGraph pipeline). Run while the container is
+        # alive so symbols resolve via /proc/<pid>/root/.
+        local script_file="${data_file%.data}"
+        sudo perf script -i "$data_file" > "$script_file" 2>/dev/null || true
+        log "Generated perf script: $script_file"
+
         sudo perf report -i "$data_file" --stdio --no-children > "$report_file" 2>&1 || true
         log "Generated perf report: $report_file"
+        archive_perf_data "$data_file"
     else
         log "WARNING: perf data file not found: $data_file"
     fi
     PERF_RECORD_PID=""
+}
+
+# Bundle DSOs needed to symbolicate this .perf.data on another host.
+# Seeds the host buildid-cache from the live container's rootfs
+# (/proc/<container_pid>/root/...) before running perf archive, so the
+# resulting <data_file>.tar.bz2 actually contains the referenced binaries.
+archive_perf_data() {
+    local data_file="$1"
+    [[ -f "$data_file" ]] || return 0
+
+    local container_pid
+    container_pid=$(get_container_pid 2>/dev/null || true)
+    if [[ -n "$container_pid" && -r "/proc/$container_pid/root" ]]; then
+        while IFS= read -r dso; do
+            [[ -z "$dso" || "${dso:0:1}" != "/" ]] && continue
+            local src="/proc/$container_pid/root$dso"
+            if [[ -e "$src" ]]; then
+                sudo perf buildid-cache --add "$src" 2>/dev/null || true
+            fi
+        done < <(sudo perf buildid-list -i "$data_file" 2>/dev/null | awk '{print $2}')
+    fi
+
+    ( cd "$(dirname "$data_file")" && sudo perf archive "$(basename "$data_file")" ) >/dev/null 2>&1 || true
+    if [[ -f "${data_file}.tar.bz2" ]]; then
+        log "Archived symbols: ${data_file}.tar.bz2"
+    else
+        log "WARNING: perf archive produced no tarball for $data_file"
+    fi
 }
 
 # --- Polling -----------------------------------------------------------------
