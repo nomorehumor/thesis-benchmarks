@@ -45,6 +45,26 @@ sinks:
         type: FLOAT64
     type: Void
     config: { }
+  - name: BID_PRICE_SINK
+    host: worker-max:8080
+    schema:
+      - name: bid$price
+        type: FLOAT64
+    type: Void
+    config: { }
+  - name: BID_SINK
+    host: worker-max:8080
+    schema:
+      - name: bid$timestamp
+        type: UINT64
+      - name: bid$auctionId
+        type: INT32
+      - name: bid$bidder
+        type: INT32
+      - name: bid$price
+        type: FLOAT64
+    type: Void
+    config: { }
   - name: PERSON_SINK
     host: worker-max:8080
     schema:
