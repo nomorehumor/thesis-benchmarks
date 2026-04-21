@@ -8,20 +8,20 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Each entry: "relative_script_path:suite:label"
 # suite may be empty for scripts that don't take a suite argument.
 BENCHMARK_RUNS=(
-    "concat/run_benchmarks.sh:baseline:concat/baseline"
-    "concat/run_benchmarks.sh:optimized:concat/optimized"
-    "concat/run_benchmarks.sh:baseline-json:concat/baseline-json"
-    "concat/run_benchmarks.sh:optimized-json:concat/optimized-json"
+#    "concat/run_benchmarks.sh:baseline:concat/baseline"
+#    "concat/run_benchmarks.sh:optimized:concat/optimized"
+#    "concat/run_benchmarks.sh:baseline-json:concat/baseline-json"
+#    "concat/run_benchmarks.sh:optimized-json:concat/optimized-json"
 
     "raw-comparison/run_benchmarks.sh:baseline:raw-comparison/baseline"
     "raw-comparison/run_benchmarks.sh:optimized:raw-comparison/optimized"
     "raw-comparison/run_benchmarks.sh:baseline-json:raw-comparison/baseline-json"
     "raw-comparison/run_benchmarks.sh:optimized-json:raw-comparison/optimized-json"
 
-    "varsized-copy/run_benchmarks.sh:baseline:varsized-copy/baseline"
-    "varsized-copy/run_benchmarks.sh:optimized:varsized-copy/optimized"
-    "varsized-copy/run_benchmarks.sh:baseline-json:varsized-copy/baseline-json"
-    "varsized-copy/run_benchmarks.sh:optimized-json:varsized-copy/optimized-json"
+#    "varsized-copy/run_benchmarks.sh:baseline:varsized-copy/baseline"
+#    "varsized-copy/run_benchmarks.sh:optimized:varsized-copy/optimized"
+#    "varsized-copy/run_benchmarks.sh:baseline-json:varsized-copy/baseline-json"
+#    "varsized-copy/run_benchmarks.sh:optimized-json:varsized-copy/optimized-json"
 
     "lazy-parsing/run_benchmarks.sh:baseline:lazy-parsing/baseline"
     "lazy-parsing/run_benchmarks.sh:optimized:lazy-parsing/optimized"
@@ -104,15 +104,15 @@ run_list() {
     done
 }
 
-#log "########################################"
-#log "# Phase 1: Benchmarks"
-#log "########################################"
-#run_list "BENCH" "${BENCHMARK_RUNS[@]}"
+log "########################################"
+log "# Phase 1: Benchmarks"
+log "########################################"
+run_list "BENCH" "${BENCHMARK_RUNS[@]}"
 
-log "########################################"
-log "# Phase 2: Perf profiling"
-log "########################################"
-run_list "PERF" "${PERF_RUNS[@]}"
+#log "########################################"
+#log "# Phase 2: Perf profiling"
+#log "########################################"
+#run_list "PERF" "${PERF_RUNS[@]}"
 
 log "########################################"
 log "# Summary"
