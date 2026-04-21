@@ -1,6 +1,21 @@
 query: SELECT name FROM person WHERE id == INT32(1) INTO NAME_SINK
 
 sinks:
+  - name: AGG_VOID
+    host: worker-max:8080
+    schema:
+      - name: bidbid$start
+        type: UINT64
+      - name: bidbid$end
+        type: UINT64
+      - name: bid$auctionId
+        type: INT32
+      - name: bid$num
+        type: UINT64
+      - name: bid$max_tmp
+        type: UINT64
+    type: Void
+    config: { }
   - name: NAME_SINK
     host: worker-max:8080
     schema:
