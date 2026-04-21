@@ -1,17 +1,24 @@
-query: SELECT name FROM person WHERE id == INT32(1) INTO VOID_SINK
+query: SELECT name FROM person WHERE id == INT32(1) INTO VOID_SINK 
 
 sinks:
-  - name: NAME_SINK
+  - name: NAME_SINK 
     host: worker-max:8080
     schema:
       - name: person$name
         type: VARSIZED
     type: Void
     config: { }
-  - name: PERSON_ID_SINK
+  - name: PERSON_ID_SINK 
     host: worker-max:8080
     schema:
       - name: person$id
+        type: INT32
+    type: Void
+    config: { }
+  - name: BID_AUCTION_ID_SINK 
+    host: worker-max:8080
+    schema:
+      - name: bid$auctionId
         type: INT32
     type: Void
     config: { }
@@ -20,20 +27,6 @@ sinks:
     schema:
       - name: person$city
         type: VARSIZED
-    type: Void
-    config: { }
-  - name: EXTRA_SINK
-    host: worker-max:8080
-    schema:
-      - name: person$extra
-        type: VARSIZED
-    type: Void
-    config: { }
-  - name: BID_AUCTION_ID_SINK
-    host: worker-max:8080
-    schema:
-      - name: bid$auctionId
-        type: INT32
     type: Void
     config: { }
   - name: ID_PRICE_AUCTION_SINK
@@ -45,27 +38,7 @@ sinks:
         type: FLOAT64
     type: Void
     config: { }
-  - name: BID_PRICE_SINK
-    host: worker-max:8080
-    schema:
-      - name: bid$price
-        type: FLOAT64
-    type: Void
-    config: { }
-  - name: BID_SINK
-    host: worker-max:8080
-    schema:
-      - name: bid$timestamp
-        type: UINT64
-      - name: bid$auctionId
-        type: INT32
-      - name: bid$bidder
-        type: INT32
-      - name: bid$price
-        type: FLOAT64
-    type: Void
-    config: { }
-  - name: PERSON_SINK
+  - name: PERSON_SINK 
     host: worker-max:8080
     schema:
       - name: person$id
@@ -87,21 +60,6 @@ sinks:
     type: Void
     config: { }
   - name: START_END_AUCTION_SINK
-    host: worker-max:8080
-    schema:
-      - name: bidbid$start
-        type: UINT64
-      - name: bidbid$end
-        type: UINT64
-      - name: bid$auctionId
-        type: INT32
-      - name: bid$num
-        type: UINT64
-      - name: bid$max_tmp
-        type: UINT64
-    type: Void
-    config: { }
-  - name: AGG_VOID
     host: worker-max:8080
     schema:
       - name: bidbid$start
