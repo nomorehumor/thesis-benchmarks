@@ -18,7 +18,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import Patch, Rectangle
+from matplotlib.patches import Rectangle
 import numpy as np
 
 
@@ -179,6 +179,7 @@ def draw_panel(ax, frames: list[Frame], bounds: tuple[float, float, float, float
     color_map = keyword_color_map(highlight_keywords)
     visible = visible_frames(frames, bounds)
     frame_step = visible[0].height if visible else 15.0
+    found_keywords = [keyword for keyword in highlight_keywords if any(matched_keyword(frame.name, [keyword]) for frame in visible)]
 
     for frame in visible:
         keyword = matched_keyword(frame.name, highlight_keywords)
@@ -208,6 +209,7 @@ def draw_panel(ax, frames: list[Frame], bounds: tuple[float, float, float, float
         spine.set_edgecolor("#cfc7bb")
         spine.set_linewidth(1.0)
     ax.tick_params(axis="both", colors="#333333", length=3, width=0.8)
+    draw_inline_legend(ax, found_keywords, color_map)
 
 
 def render_figure(baseline_svg: Path, optimized_svg: Path, output: Path, highlight_keywords: list[str]) -> None:
@@ -222,29 +224,7 @@ def render_figure(baseline_svg: Path, optimized_svg: Path, output: Path, highlig
     draw_panel(axes[0], baseline_frames, baseline_bounds, "Baseline", highlight_keywords)
     draw_panel(axes[1], optimized_frames, optimized_bounds, "Optimized", highlight_keywords)
 
-    legend_handles = [
-        Patch(
-            facecolor=keyword_color_map(highlight_keywords)[kw],
-            edgecolor="#111111",
-            label=display_name(kw, 60),
-        )
-        for kw in highlight_keywords
-    ]
-    if legend_handles:
-        fig.legend(
-            handles=legend_handles,
-            loc="lower left",
-            bbox_to_anchor=(0.03, 0.915, 0.955, 0.05),
-            ncol=len(legend_handles),
-            mode="expand",
-            frameon=False,
-            fontsize=10,
-            borderaxespad=0.0,
-            handletextpad=0.5,
-            columnspacing=1.2,
-        )
-
-    plt.subplots_adjust(left=0.03, right=0.985, top=0.88, bottom=0.045, hspace=0.16)
+    plt.subplots_adjust(left=0.03, right=0.985, top=0.96, bottom=0.045, hspace=0.16)
     fig.savefig(output, bbox_inches="tight")
     plt.close(fig)
 
@@ -260,7 +240,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    highlight_keywords = args.highlight or ["Arena::allocateMemory", "parseStringIntoNautilusRecord"]
+    highlight_keywords = args.highlight or ["extractRawFieldBytes", "parseNonStringValueIntoNautilusRecord"]
     render_figure(args.baseline_svg, args.optimized_svg, args.output, highlight_keywords)
 
 

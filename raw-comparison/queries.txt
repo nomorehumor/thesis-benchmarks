@@ -1,1 +1,6 @@
-SELECT start, end, auctionId, num, max_tmp FROM (SELECT auctionId, COUNT(auctionId) AS num, start, end FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) INNER JOIN (SELECT MAX(num_ids) AS max_tmp, start, end FROM (SELECT auctionId, COUNT(auctionId) AS num_ids, start FROM bid GROUP BY auctionId WINDOW SLIDING(timestamp, SIZE 10 SEC, ADVANCE BY 2 SEC)) WINDOW TUMBLING(start, SIZE 2 SEC)) ON num == max_tmp WINDOW TUMBLING(start, SIZE 2 SEC) INTO AGG_VOID;
+SELECT auctionId FROM bid WHERE bidder == INT32(1001) INTO BID_AUCTION_ID_SINK
+SELECT auctionId FROM bid WHERE price == FLOAT64(220) INTO BID_AUCTION_ID_SINK
+SELECT auctionId FROM bid WHERE timestamp == UINT64(1746560847870) INTO BID_AUCTION_ID_SINK
+SELECT id FROM person WHERE city == VARSIZED("redmond") INTO PERSON_ID_SINK
+SELECT auctionId FROM bid WHERE bidder == INT32(1001) AND price == FLOAT64(220) INTO BID_AUCTION_ID_SINK
+SELECT auctionId FROM bid WHERE bidder == INT32(1001) OR bidder == INT32(1002) INTO BID_AUCTION_ID_SINK

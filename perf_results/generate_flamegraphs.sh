@@ -22,7 +22,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 RESULTS_ROOT="${1:-$SCRIPT_DIR}"
-FLAMEGRAPH_DIR="${FLAMEGRAPH_DIR:-$SCRIPT_DIR/FlameGraph}"
+FLAMEGRAPH_DIR="${FLAMEGRAPH_DIR:-$SCRIPT_DIR/../FlameGraph}"
 FLAMEGRAPH_PL="$FLAMEGRAPH_DIR/flamegraph.pl"
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
